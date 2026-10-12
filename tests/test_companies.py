@@ -31,8 +31,8 @@ def test_target_company_rows_merge_sponsorship_network_and_source_evidence(tmp_p
     _write_rows(
         out_dir / "company_sponsorship_evidence.csv",
         [
-            {"company": "JPMorganChase", "lca_cases": "100", "relevant_lca_cases": "12", "relevant_nyc_lca_cases": "5"},
-            {"company": "IBM", "lca_cases": "80", "relevant_lca_cases": "2", "relevant_nyc_lca_cases": "0"},
+            {"company": "JPMorganChase", "lca_cases": "100", "relevant_lca_cases": "12", "preferred_location_lca_cases": "5"},
+            {"company": "IBM", "lca_cases": "80", "relevant_lca_cases": "2", "preferred_location_lca_cases": "0"},
         ],
     )
     connections = [

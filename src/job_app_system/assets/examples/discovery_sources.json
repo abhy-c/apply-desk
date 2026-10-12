@@ -40,7 +40,7 @@
     "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
     "searches": [
       {
-        "label": "Product · past 24 hours",
+        "label": "Product \u00b7 past 24 hours",
         "url": "https://www.indeed.com/jobs?q=product+manager&l=United+States&sort=date&fromage=1"
       },
       {
@@ -180,7 +180,7 @@
     "name": "Jobright",
     "mode": "manual_discovery",
     "homepage_url": "https://jobright.ai/",
-    "description": "No ingestion of Jobright recommendations. Resume output still requires the approved Dallas format and language gates.",
+    "description": "No ingestion of Jobright recommendations. Resume output still requires the user-selected master formatting and language gates.",
     "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
     "searches": [
       {
@@ -190,7 +190,7 @@
     ],
     "category": "Tech and startups",
     "priority": "High",
-    "coverage_note": "No ingestion of Jobright recommendations. Resume output still requires the approved Dallas format and language gates.",
+    "coverage_note": "No ingestion of Jobright recommendations. Resume output still requires the user-selected master formatting and language gates.",
     "recommended_reader": "User matching or saved jobs to official postings",
     "evidence_url": "https://jobright.ai/",
     "audit_checked_at": "2026-10-07"

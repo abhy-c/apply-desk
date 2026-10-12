@@ -10,7 +10,7 @@ import json
 import re
 from pathlib import Path
 
-from .adapters import JOB_FIELDS, clean_text, infer_seniority, infer_workplace, is_product_role
+from .adapters import JOB_FIELDS, clean_text, infer_seniority, infer_workplace
 from .workflow import CONTACTS_CRM_FIELDS, ensure_workflow_files
 
 
@@ -57,7 +57,7 @@ def import_apify_jobs(export_path: Path, jobs_path: Path, source_label: str = "a
     known_ids = {row.get("role_id", "").strip() for row in jobs if row.get("role_id", "").strip()}
     added = 0
     skipped_linkedin = 0
-    skipped_non_product = 0
+    skipped_outside_focus = 0
 
     for raw in incoming:
         normalized = _normalize_apify_job(raw, source_label)
@@ -67,8 +67,10 @@ def import_apify_jobs(export_path: Path, jobs_path: Path, source_label: str = "a
             continue
         if not normalized.get("role_title") or not normalized.get("company"):
             continue
-        if not is_product_role(normalized["role_title"]):
-            skipped_non_product += 1
+        from .workspace import read, title_matches
+        focus=read(jobs_path.parent.parent)["setup"]
+        if focus.get("titles") and not title_matches(normalized["role_title"],focus):
+            skipped_outside_focus += 1
             continue
         if normalized["role_url"] in known_urls or normalized["role_id"] in known_ids:
             continue
@@ -80,7 +82,7 @@ def import_apify_jobs(export_path: Path, jobs_path: Path, source_label: str = "a
     from .validation import job
     jobs = [job(row) for row in jobs]
     _write_rows(jobs_path, jobs, JOB_FIELDS)
-    return {"added": added, "skipped_linkedin": skipped_linkedin, "skipped_non_product": skipped_non_product}
+    return {"added": added, "skipped_linkedin": skipped_linkedin, "skipped_outside_focus": skipped_outside_focus}
 
 
 def _normalize_fullenrich_row(row: dict[str, object]) -> dict[str, str]:

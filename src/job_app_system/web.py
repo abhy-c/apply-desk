@@ -97,7 +97,7 @@ def _handler(project_dir: Path) -> type[BaseHTTPRequestHandler]:
     session = secrets.token_urlsafe(32)
     pairing_code = secrets.token_urlsafe(32)
     class ApplyDeskHandler(BaseHTTPRequestHandler):
-        server_version = "ApplyDesk/0.2"
+        server_version = "ApplyDesk/0.4"
         data_directory=project_dir / 'data'
 
         @classmethod
@@ -112,6 +112,19 @@ def _handler(project_dir: Path) -> type[BaseHTTPRequestHandler]:
                 return
             if parsed.path.startswith("/assets/"):
                 self._serve_file(WEB_ROOT / Path(parsed.path.removeprefix("/assets/")).name)
+                return
+            if parsed.path == "/api/workspace":
+                from .workspace import status
+                self._json(status(project_dir))
+                return
+            if parsed.path == "/api/workspace/file":
+                from .portable_resume import load, digest
+                query=parse_qs(parsed.query)
+                item=next((x for x in load(project_dir)['exports'] if x['id']==query.get('id',[''])[0]),None)
+                fmt=query.get('format',['pdf'])[0]
+                if not item or fmt not in {'pdf','docx'} or digest(item[fmt])!=item[fmt+'_sha256']:
+                    self.send_error(HTTPStatus.NOT_FOUND);return
+                self._serve_file(Path(item[fmt]), 'application/pdf' if fmt=='pdf' else 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
                 return
             if parsed.path == "/api/state":
                 try:
@@ -164,6 +177,13 @@ def _handler(project_dir: Path) -> type[BaseHTTPRequestHandler]:
             try:
                 parsed = urlparse(self.path)
                 payload = self._read_json()
+                if parsed.path.startswith('/api/workspace/'):
+                    from .workspace_cli import dispatch
+                    result=dispatch(project_dir,parsed.path.removeprefix('/api/workspace/'),payload)
+                    if parsed.path.endswith(('/setup','/rule','/improvement-review','/undo','/assessment','/feedback','/intake')):
+                        build(project_dir/'data',project_dir/'out')
+                    self._json({'result':result})
+                    return
                 if parsed.path == '/api/session':
                     code=payload.get('code','')
                     if not isinstance(code,str) or not hmac.compare_digest(code,pairing_code):
@@ -211,6 +231,8 @@ def _handler(project_dir: Path) -> type[BaseHTTPRequestHandler]:
                     self._json({"removed": removed, "state": _state(project_dir, rebuild=False)})
                     return
                 if parsed.path == "/api/fetch-ats":
+                    from .workspace import status
+                    if not status(project_dir)["search_ready"]: raise ValueError("Complete role focus, locations, sources and ranking setup first")
                     count = fetch_enabled_ats_sources(
                         project_dir / "data" / "ats_sources.csv",
                         project_dir / "data" / "jobs_fetched.csv",
@@ -218,6 +240,8 @@ def _handler(project_dir: Path) -> type[BaseHTTPRequestHandler]:
                     self._json({"fetched": count, "state": _state(project_dir, rebuild=True)})
                     return
                 if parsed.path == "/api/discovery-import":
+                    from .workspace import status
+                    if not status(project_dir)["search_ready"]: raise ValueError("Complete role focus, locations, sources and ranking setup first")
                     raw_urls = payload.get("urls", "")
                     if isinstance(raw_urls, list):
                         raw_urls = "\n".join(str(url) for url in raw_urls)
@@ -428,6 +452,8 @@ def _state(project_dir: Path, rebuild: bool = True) -> dict[str, object]:
     feed = _feed_status(data_dir)
 
     return {
+        "setup": __import__("job_app_system.workspace",fromlist=["status"]).status(project_dir),
+        "verification_queue": json.loads((out_dir / "roles_needs_verification.json").read_text()) if (out_dir / "roles_needs_verification.json").exists() else [],
         "profile": profile,
         "validation_warnings": job_warnings(data_dir),
         "stats": {

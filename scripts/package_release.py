@@ -15,7 +15,7 @@ import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 ASSETS=Path('src/job_app_system/assets')
-ROOT_FILES=['README.md','LICENSE','AGENTS.md','.gitignore','pyproject.toml','requirements-dev-lock.txt']
+ROOT_FILES=['plugin.json','SECURITY.md','CONTRIBUTING.md','CHANGELOG.md','README.md','LICENSE','AGENTS.md','.gitignore','pyproject.toml','requirements-dev-lock.txt']
 SCHEMAS=['ats_sources.csv','companies.csv','contacts_seed.csv','jobs_seed.csv','target_companies.csv','discovery_sources.json']
 PATTERNS=[r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY',r'gh[pousr]_[A-Za-z0-9]{30,}',r'github_pat_[A-Za-z0-9_]{30,}',r'AKIA[0-9A-Z]{16}',r'AIza[0-9A-Za-z_-]{30,}',r'sk-[A-Za-z0-9_-]{25,}']
 
@@ -24,8 +24,10 @@ def release_files(root):
     paths.extend(p.relative_to(root) for p in sorted((root/'src/job_app_system').glob('*.py')))
     paths.extend(p.relative_to(root) for p in sorted((root/'tests').glob('test_*.py')))
     paths.extend(p.relative_to(root) for p in sorted((root/'scripts').glob('*.py')))
-    paths.extend([Path('.github/workflows/test.yml'),ASSETS/'web/index.html',ASSETS/'web/app.js',ASSETS/'web/app.css'])
+    paths.extend([Path('.github/workflows/test.yml'),ASSETS/'web/index.html',ASSETS/'web/app.js',ASSETS/'web/app.css',ASSETS/'web/workspace.js',ASSETS/'export_word_pdf.applescript'])
     paths.extend(ASSETS/'examples'/name for name in SCHEMAS)
+    paths.extend([Path('.codex-plugin/plugin.json'),Path('.agents/plugins/marketplace.json')])
+    paths.extend(p.relative_to(root) for p in sorted((root/'skills').rglob('*.md')))
     result={}
     for path in sorted(paths):
         source=root/path

@@ -67,6 +67,10 @@ CONTACT_FIELDS = [
 @transactional('data_dir', 'data')
 def build(data_dir: Path, out_dir: Path, today: date | None = None) -> dict[str, int]:
     today = today or date.today()
+    from .workspace import read as read_workspace, assess
+    workspace = read_workspace(data_dir.parent)
+    custom_ranking = True
+    verification_rows = []
     preferences = load_profile(data_dir)
     companies = read_companies(data_dir / "companies.csv")
     jobs = read_jobs(data_dir / "jobs_seed.csv")
@@ -76,13 +80,15 @@ def build(data_dir: Path, out_dir: Path, today: date | None = None) -> dict[str,
     discovered_jobs = data_dir / "jobs_discovered.csv"
     if discovered_jobs.exists():
         jobs.extend(read_jobs(discovered_jobs))
+    if (data_dir / "jobs_codex.csv").exists():
+        jobs.extend(read_jobs(data_dir / "jobs_codex.csv"))
     unique_jobs = {}
     for job in jobs:
         key = _canonical_url(job.role_url) if job.role_url else job.role_id
         previous = unique_jobs.get(key)
         if previous:
             # Preserve application history IDs while accepting verified discovery detail.
-            job = replace(job, role_id=previous.role_id) if job.source.startswith("discovery:") else previous
+            job = replace(job, role_id=previous.role_id) if job.source.startswith(("discovery:", "codex:")) else previous
         unique_jobs[key] = job
     jobs = list(unique_jobs.values())
     contacts = read_contacts(data_dir / "contacts_seed.csv")
@@ -92,7 +98,12 @@ def build(data_dir: Path, out_dir: Path, today: date | None = None) -> dict[str,
     role_rows: list[dict[str, object]] = []
     for job in jobs:
         company = company_by_key.get(job.company.lower())
-        score = score_job(job, company, today, preferences=preferences)
+        evidence_row = {"role_id":job.role_id,"role_title":job.role_title,"company":job.company,"role_url":job.role_url,"source":job.source,
+                        "posted_date":job.posted_date.isoformat() if job.posted_date else "", "location":job.location,"workplace":job.workplace,
+                        "domain_tags":",".join(sorted(job.domain_tags)),"seniority":job.seniority,"status":job.status,"description":job.description}
+        score = assess(data_dir.parent, evidence_row, workspace, today) if custom_ranking else score_job(job, company, today, preferences=preferences)
+        if score.get("verification_state") == "needs_verification":
+            verification_rows.append({**evidence_row,**score})
         if not score["role_eligible"]:
             continue
         row = {
@@ -112,6 +123,8 @@ def build(data_dir: Path, out_dir: Path, today: date | None = None) -> dict[str,
         row.update(score)
         role_rows.append(row)
 
+    from .storage import atomic_json
+    atomic_json(out_dir / "roles_needs_verification.json", verification_rows)
     role_rows.sort(key=lambda item: int(item["role_score"]), reverse=True)
     role_by_id = {str(row["role_id"]): row for row in role_rows}
 

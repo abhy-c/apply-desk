@@ -16,7 +16,7 @@ from .workflow import build_enrichment_queue, build_weekly_queue, ensure_workflo
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build product-role outreach review exports.")
+    parser = argparse.ArgumentParser(description="Build user-configured job-search review exports.")
     parser.add_argument(
         "command",
         choices=[
@@ -148,7 +148,7 @@ def main() -> None:
         print(
             "Imported Apify jobs: "
             f"{counts['added']} added, {counts['skipped_linkedin']} LinkedIn rows skipped, "
-            f"{counts['skipped_non_product']} non-product rows skipped"
+            f"{counts['skipped_outside_focus']} rows outside your focus skipped"
         )
         return
 

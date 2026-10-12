@@ -19,12 +19,12 @@ PACKET_DRAFT_DIR = "application_packets"
 
 DEFAULT_PROFILE = {
     "full_name": "Your Name",
-    "target_titles": "Product Manager, Senior Product Manager, AI Product Manager",
-    "target_locations": "United States remote",
+    "target_titles": "",
+    "target_locations": "",
     "work_authorization": "",
     "salary_range": "",
-    "must_have": "B2B SaaS, fintech, regtech, enterprise AI/workflow automation, legal tech, edtech",
-    "avoid": "Director, Principal Product Manager, Staff Product Manager",
+    "must_have": "",
+    "avoid": "",
     "standard_answers": (
         "Use only factual experience from the resume/fact bank. Keep application answers concise, "
         "specific, and human-reviewable before submission."

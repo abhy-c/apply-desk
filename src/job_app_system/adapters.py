@@ -60,18 +60,28 @@ def fetch_enabled_ats_sources(sources_path: Path, out_path: Path) -> int:
     for source in read_ats_sources(sources_path):
         if source.get("enabled", "").strip().lower() not in {"true", "yes", "1"}:
             continue
+        from .workspace import read
+        configured = read(sources_path.parent.parent)["setup"]
+        if configured.get("titles"):
+            source = {**source, "target_titles": configured["titles"], "excluded_titles": configured.get("excluded_titles", "")}
         ats = source.get("ats", "").strip().lower()
-        if ats == "greenhouse":
-            raw_jobs = fetch_greenhouse_board(source["slug"].strip())
-            rows.extend(normalize_greenhouse_jobs(source, raw_jobs))
-        elif ats == "ashby":
-            raw_jobs = fetch_ashby_postings(source["slug"].strip())
-            rows.extend(normalize_ashby_jobs(source, raw_jobs))
-        elif ats == "lever":
-            raw_jobs = fetch_lever_postings(source["slug"].strip())
-            rows.extend(normalize_lever_jobs(source, raw_jobs))
-        else:
-            raise ValueError(f"Unsupported ATS type: {ats}")
+        try:
+            if ats == "greenhouse":
+                raw_jobs = fetch_greenhouse_board(source["slug"].strip())
+                rows.extend(normalize_greenhouse_jobs(source, raw_jobs))
+            elif ats == "ashby":
+                raw_jobs = fetch_ashby_postings(source["slug"].strip())
+                rows.extend(normalize_ashby_jobs(source, raw_jobs))
+            elif ats == "lever":
+                raw_jobs = fetch_lever_postings(source["slug"].strip())
+                rows.extend(normalize_lever_jobs(source, raw_jobs))
+            else:
+                raise ValueError(f"Unsupported ATS type: {ats}")
+            matches = [row for row in rows if row.get('company') == source.get('company')]
+            _record_source_check(sources_path.parent.parent, source, len(raw_jobs), len(matches), '')
+        except (ValueError, OSError) as exc:
+            _record_source_check(sources_path.parent.parent, source, 0, 0, str(exc))
+            continue
 
     from .validation import job
     rows=[job(row) for row in rows]
@@ -83,7 +93,7 @@ def normalize_greenhouse_jobs(source: dict[str, str], jobs: list[dict[str, objec
     normalized = []
     for job in jobs:
         title = str(job.get("title", ""))
-        if not is_product_role(title):
+        if not _source_title_matches(title, source):
             continue
         location_data = job.get("location") if isinstance(job.get("location"), dict) else {}
         location = str(location_data.get("name") or source.get("location_hint", ""))
@@ -110,7 +120,7 @@ def normalize_ashby_jobs(source: dict[str, str], jobs: list[dict[str, object]]) 
     normalized = []
     for job in jobs:
         title = str(job.get("title", ""))
-        if not is_product_role(title):
+        if not _source_title_matches(title, source):
             continue
         if job.get("isListed") is False:
             continue
@@ -139,7 +149,7 @@ def normalize_lever_jobs(source: dict[str, str], jobs: list[dict[str, object]]) 
     normalized = []
     for job in jobs:
         title = str(job.get("text", ""))
-        if not is_product_role(title):
+        if not _source_title_matches(title, source):
             continue
         categories = job.get("categories") if isinstance(job.get("categories"), dict) else {}
         location = str(categories.get("location") or source.get("location_hint", ""))
@@ -164,42 +174,6 @@ def normalize_lever_jobs(source: dict[str, str], jobs: list[dict[str, object]]) 
             }
         )
     return normalized
-
-
-def is_product_role(title: str) -> bool:
-    lowered = title.lower()
-    excluded = [
-        "analyst",
-        "communications",
-        "compliance program",
-        "designer",
-        "design",
-        "enablement",
-        "engineering manager",
-        "marketing",
-        "operations",
-        "partnerships manager",
-        "program manager",
-        "solutions architecture",
-        "support",
-    ]
-    if any(term in lowered for term in excluded):
-        return False
-    return bool(
-        re.search(
-            r"\b("
-            r"product manager|"
-            r"senior product manager|"
-            r"sr\.? product manager|"
-            r"staff product manager|"
-            r"lead product manager|"
-            r"product lead|"
-            r"principal product manager|"
-            r"group product manager"
-            r")\b",
-            lowered,
-        )
-    )
 
 
 def infer_seniority(title: str) -> str:
@@ -259,3 +233,20 @@ def clean_text(value: str) -> str:
     value = re.sub(r"<[^>]+>", " ", value)
     value = re.sub(r"\s+", " ", value)
     return value.strip()
+
+
+def _source_title_matches(title, source):
+    if source.get('target_titles'):
+        from .workspace import title_matches
+        return title_matches(title, {'titles':source['target_titles'],'excluded_titles':source.get('excluded_titles','')})
+    return bool(str(title).strip())
+
+
+def _record_source_check(root, source, usable, matches, error):
+    from .workspace import read, source_result
+    configured=read(root)
+    item=next((x for x in configured['sources'] if x['name']==source.get('company') and x['method']=='feed'),None)
+    if item:
+        source_result(root,{'id':item['id'],'state':'failed' if error else 'working','usable':usable,'matches':min(matches,usable),
+                            'error':error,'evidence':'Employer ATS public JSON response' if not error else 'ATS request failed',
+                            'coverage':'Configured employer board: '+source.get('ats','')+'/'+source.get('slug','')})

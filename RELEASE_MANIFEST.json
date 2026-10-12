@@ -1,6 +1,14 @@
 {
-  "version": "0.2.0",
+  "version": "0.4.0",
   "files": [
+    {
+      "path": ".agents/plugins/marketplace.json",
+      "sha256": "d5f6388a131ea958ba7061d70b4f69197ab99fa040423255ed46fe35cfbcd249"
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "sha256": "50c4959a9dc96f54c4dd2ef5f4d66c83b1f035af389d00a669b034b836094ee7"
+    },
     {
       "path": ".github/workflows/test.yml",
       "sha256": "75b7af0170d50d7388e8665a58c2a5ea41698313f48f5b46b6dd495b575c9d85"
@@ -14,28 +22,84 @@
       "sha256": "421a2ac066667bd072c30f1a68e02865a8f2dce1deb36bceffd5d1416ab4925b"
     },
     {
+      "path": "CHANGELOG.md",
+      "sha256": "3d5cfa0ced37a60f1ba4c1c698dfbd82e41d669b86258a2181e7033c713113b1"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "fb792ac858017fdd0d59081b91a58d4b80af0777b95953aaf19303812be9e5a5"
+    },
+    {
       "path": "LICENSE",
       "sha256": "aa3d69b8fb69014edcb616b10abc0577ba01c10bb2a725481cd0b3c67c4a6eb8"
     },
     {
       "path": "README.md",
-      "sha256": "ac4ee198ca21de1dff970d30229770029fe42a9caf9db610c2f0075e203dfa64"
+      "sha256": "b3ce3ad1348e77392dfed33a5705cafe26e64712850484d1e92da9e6d1ebe238"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "6976749c327ebb94846fa318660d247f8100aa5dc472d18c23113246e2106b6b"
+    },
+    {
+      "path": "plugin.json",
+      "sha256": "d9d1345d64efa704e20c9676c4d2d1ea01aeef87ba50b14d77a733af60a694b8"
     },
     {
       "path": "pyproject.toml",
-      "sha256": "98badf94e9d3b73bbefc2625b1eeca3dfa78ead521da27cf7cf00ec9425aa5da"
+      "sha256": "8568822b077133e66263ea3e1c3c14e9253f5d297f4b76d208e908c9cb0999f6"
     },
     {
       "path": "requirements-dev-lock.txt",
-      "sha256": "dcae013191dab86056a0f5fbc812bcaf3b8f11b96c3435c536a8b255b6ad6b1a"
+      "sha256": "83d703d3b0f545b0b8eafd3c4d345aae9902c893122f6d931012f636ced1bd4d"
     },
     {
       "path": "scripts/package_release.py",
-      "sha256": "e7eef0c37777de3d2e643f0353914badc8b9ddad05903c4d895a53cc49786eb8"
+      "sha256": "9db785c4e42766aecb3f646d929fd526744793413fd2fa22ba0c399936e83ae5"
     },
     {
       "path": "scripts/setup.py",
       "sha256": "d3de571aab55d4c89bfa466ce856678c746cf64401597d51069ccf7f14f15e9b"
+    },
+    {
+      "path": "skills/apply-desk/SKILL.md",
+      "sha256": "ffaae6809525f474a60fee81574996c168631ee3a17ab662092140f0357c3180"
+    },
+    {
+      "path": "skills/apply-desk/references/bridge.md",
+      "sha256": "c2877a682ecd0140b99947cafcc461c683742d152a8f307c6f787b6e021097f6"
+    },
+    {
+      "path": "skills/apply-desk/references/handoff.md",
+      "sha256": "da9dacd8eeba16c5f497f4845ebd1f2d39c73b2760424ea079c4ed0dcdee80ae"
+    },
+    {
+      "path": "skills/apply-desk/references/improvements.md",
+      "sha256": "c35dc8c5ce1da8498da5d84031069376b445443d40a99a24a0ea6c46bd7cea52"
+    },
+    {
+      "path": "skills/apply-desk/references/portals.md",
+      "sha256": "c23665d77c97756d998c8fad39d2a1bae9cf1bd3df32e11e4759daac50abed49"
+    },
+    {
+      "path": "skills/apply-desk/references/research.md",
+      "sha256": "29ff6a4e7ba488a70eca8bc170331c7d8b072351595945a29aa4e83e13bfa610"
+    },
+    {
+      "path": "skills/apply-desk/references/resume.md",
+      "sha256": "fccfa642c7bd83ecc11c7648f4fc00c7a178bf06d9173d26a0ff8fedade5d4b9"
+    },
+    {
+      "path": "skills/apply-desk/references/setup.md",
+      "sha256": "c1890bb1dc3112b850379c75173d7bc1ac88d01448de38f4f105065c63b4183c"
+    },
+    {
+      "path": "skills/grill-me/SKILL.md",
+      "sha256": "b0893503befc92d0c7fb2c70a51912d21c839330fdf323b020f631e05dd13e75"
+    },
+    {
+      "path": "skills/setup/SKILL.md",
+      "sha256": "0b78942490ee4cf663c929f76977a5d1bb33fbb00549898bc166c450c508e275"
     },
     {
       "path": "src/job_app_system/__init__.py",
@@ -43,11 +107,11 @@
     },
     {
       "path": "src/job_app_system/adapters.py",
-      "sha256": "ded3f0771c21597daa08e06bebf19a7d24c56c25ebe170c5c95411c4ddb8fa31"
+      "sha256": "6e868fefe7bb5c65751195f65a5a75bd5edd43dcbc765aef85b9bfd9fbce7c5a"
     },
     {
       "path": "src/job_app_system/application.py",
-      "sha256": "0376a4d39c177f6da1bfac42e8b37394fc06afbcb1b3991f1b51ff704c20af7e"
+      "sha256": "5594b1cf32f6db538bd7b879b4c0e7a5e51f7810b7d4e8ca0beded413453bcbe"
     },
     {
       "path": "src/job_app_system/assets/examples/ats_sources.csv",
@@ -63,7 +127,7 @@
     },
     {
       "path": "src/job_app_system/assets/examples/discovery_sources.json",
-      "sha256": "c2c6d4d49739284944daa20102682f7df515cc07629af57e974e73eefdac5ab8"
+      "sha256": "bfe62605b84c856d4ab816c5e06e9a8f0181b96b2e5e67dbc74353c9e269a310"
     },
     {
       "path": "src/job_app_system/assets/examples/jobs_seed.csv",
@@ -74,16 +138,24 @@
       "sha256": "0fc534ea677f0a4b778e7f739ce18f3c62838f81440f73bd7193596c89663879"
     },
     {
+      "path": "src/job_app_system/assets/export_word_pdf.applescript",
+      "sha256": "d1cda2629d1971da42cb1a7aed2aae84cfab2ffa1c9b6c98d1eb823114ea2ba7"
+    },
+    {
       "path": "src/job_app_system/assets/web/app.css",
-      "sha256": "5ef62d4e59ea6f34e882d442954bfd6bce9502f2c615e526ec146d75c60fb4a7"
+      "sha256": "722edda04c08e87d1d9fe7de0ebcdd7f587060a22f0fa4449e210b416c34eee0"
     },
     {
       "path": "src/job_app_system/assets/web/app.js",
-      "sha256": "32ff1115800742ca705eded985a3e417dcb36ecdaadc5a840891c81b27ac7525"
+      "sha256": "ee54b6844c0385c9535fd0c7dd5462e0b5980993ce0afa3f38c22ad35b8b1d12"
     },
     {
       "path": "src/job_app_system/assets/web/index.html",
-      "sha256": "5b2d83daf78a996eee2b65a37416ee966ff2141976d91b7a074718c0beed5cf2"
+      "sha256": "7648ab28df85b8d16939e408acac15e7b1f8a09782d2ad425a375fcb4bfb29de"
+    },
+    {
+      "path": "src/job_app_system/assets/web/workspace.js",
+      "sha256": "cbec61454d1ec5036edbf85c7ba3efeca15162ac49abb3ee3f7b0e362dfaf00e"
     },
     {
       "path": "src/job_app_system/bullet_library.py",
@@ -91,11 +163,11 @@
     },
     {
       "path": "src/job_app_system/cli.py",
-      "sha256": "a429501a5377af27fdac3f79bc2d9b8c104010ffabe7442f6e2bb41af94978bb"
+      "sha256": "09d6aa3d935bbfd67830101c6bda599edf4ee8061dbe2f8f22a49ded8e7bd3c8"
     },
     {
       "path": "src/job_app_system/companies.py",
-      "sha256": "e2f4a1ed45a3ff36063c6c16f24f21fc539c2865d6d059e4bd74d5c30cacff6c"
+      "sha256": "639d7a66b37d42ea87a17b695e26b940d51b48df28e5d1f25b234468153b478a"
     },
     {
       "path": "src/job_app_system/connections.py",
@@ -107,7 +179,7 @@
     },
     {
       "path": "src/job_app_system/discovery_import.py",
-      "sha256": "2c22cfac83494ccdb5af4bb07bfec19989240a63131334587d23cf3f46dc85eb"
+      "sha256": "26b1be7626bbd2be8227d6d9728f9889e447c1ca890b2879433f065f8b6c664d"
     },
     {
       "path": "src/job_app_system/docx_import.py",
@@ -143,7 +215,15 @@
     },
     {
       "path": "src/job_app_system/pipeline.py",
-      "sha256": "ef2bfc62fb96f00a1b97640a1bf7312a36b6dd91951148afa77edb90d98a262c"
+      "sha256": "ca51db005b30391c91cd11c1cfc771f340818f316a792f9794b576866d161c99"
+    },
+    {
+      "path": "src/job_app_system/portable_resume.py",
+      "sha256": "93218519621dcc30c37eb0a64905ac9e1dbfae1a49804c581895030a2421db44"
+    },
+    {
+      "path": "src/job_app_system/portals.py",
+      "sha256": "f3ea783cfda06d41dd6dd9653674a035d46c8ad9b7cfe07c2336b2b8fc760f28"
     },
     {
       "path": "src/job_app_system/recruiters.py",
@@ -155,7 +235,7 @@
     },
     {
       "path": "src/job_app_system/scoring.py",
-      "sha256": "508a28a39d8cd64f2fac329aa3830d34817eae91f2ad3cf5ae2d785fb4ae7459"
+      "sha256": "ac8c216c46ca58602d5bcc2da4ca6a30bd07dd8e7e152b733d4fdfaa59a35316"
     },
     {
       "path": "src/job_app_system/sheets.py",
@@ -167,7 +247,7 @@
     },
     {
       "path": "src/job_app_system/tool_imports.py",
-      "sha256": "a046e997c007ec7cc834da2c95ebd589aedf0000d57ca22973154ddad4d90aeb"
+      "sha256": "85905eb0dc184ff1d0a48b0eb37aa202371a4a3b15aa09fff974b4a285fcc3b9"
     },
     {
       "path": "src/job_app_system/validation.py",
@@ -175,11 +255,19 @@
     },
     {
       "path": "src/job_app_system/web.py",
-      "sha256": "ab969f45aca23c2a99ab903be4cc5866114c461be2bc234bc96aa40fba82be5a"
+      "sha256": "1da67b8359ea35b34f01ef5b7d89a6381f3eb02f46054fff8c4db82a1c61232e"
     },
     {
       "path": "src/job_app_system/workflow.py",
       "sha256": "3e78ac582f528e9e30a75f7dc10020f28f55f722645d0f23a27cbf78e174ce30"
+    },
+    {
+      "path": "src/job_app_system/workspace.py",
+      "sha256": "32e198ef9637c75f2492dc3464aadab70ec0e36588dd955e5c714e892b18796c"
+    },
+    {
+      "path": "src/job_app_system/workspace_cli.py",
+      "sha256": "d91d91955380ce7635195b4e35eef55a7b14b77e99c3c4613687b0c98e70aff9"
     },
     {
       "path": "tests/test_adapters.py",
@@ -191,7 +279,7 @@
     },
     {
       "path": "tests/test_companies.py",
-      "sha256": "5aa467be056967d68221afcc13fe24e4249d188c3bae675595bee152e77a8b7b"
+      "sha256": "ba29da27a1cc32dca0b580f4ef7e141566c27cde1a6bf43fc7882ed622b31b7f"
     },
     {
       "path": "tests/test_connections.py",
@@ -206,8 +294,16 @@
       "sha256": "88d3fd155174bb6cb821b4a5766ef1b320bae80fe8d9c9b2e09d5ee7f9b355fc"
     },
     {
+      "path": "tests/test_portals.py",
+      "sha256": "47c08a84d74fef9bc1799f6098cb0dee9e95e28c55550880ad1f85d79343ad8a"
+    },
+    {
       "path": "tests/test_public_preview.py",
       "sha256": "e63812ee69e0c79e8a2f4c8a6eabd7ee0702d9b36e67d04e7a024cab89a30660"
+    },
+    {
+      "path": "tests/test_redteam_release.py",
+      "sha256": "40dd04137259b33e1b08356e33665780b3a0574ecd7ea2c50d108aed2fdc4004"
     },
     {
       "path": "tests/test_release_security.py",
@@ -215,11 +311,15 @@
     },
     {
       "path": "tests/test_scoring.py",
-      "sha256": "b1ff4603192533b86e1d72ab0d7b3d61fa3bdebf6af25c59bd7e892beb7e398c"
+      "sha256": "6a84ebf887e05c45be31e455f968c7ae503d9fdc820168b8ee8510f07939c637"
     },
     {
       "path": "tests/test_web.py",
       "sha256": "e451dd0f86672a77eedd00eac2660e0e949a1a3699858d00ba89bf1adb83ceb9"
+    },
+    {
+      "path": "tests/test_workspace.py",
+      "sha256": "65476dae0c3536be03aadc44530556e319dcad10c91dd4545b205024ebf01691"
     }
   ]
 }

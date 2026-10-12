@@ -1,0 +1,17 @@
+{
+  "name": "apply-desk",
+  "version": "0.4.0",
+  "description": "A private local job-search workspace with guided setup, evidence-backed ranking and approved resume generation using your Codex AI engine.",
+  "skills": "./skills/",
+  "author": {
+    "name": "abhy-c"
+  },
+  "homepage": "https://github.com/abhy-c/apply-desk",
+  "repository": "https://github.com/abhy-c/apply-desk",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  }
+}

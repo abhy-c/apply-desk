@@ -14,6 +14,7 @@
           <h1>Apply Desk</h1>
         </div>
         <nav aria-label="Workspace">
+          <button class="nav-item" data-view="setup">Setup & improvements</button>
           <button class="nav-item is-active" data-view="focus">Focus</button>
           <button class="nav-item" data-view="roles">Roles</button>
           <button class="nav-item" data-view="legaltech">Legal tech</button>
@@ -84,6 +85,69 @@
           </div>
         </section>
 
+        <section class="view" id="setupView" aria-labelledby="setupHeading">
+ <div class="panel"><h3 id="setupHeading">Your workspace setup</h3>
+ <p id="setupReadiness"></p><p id="resumeReadiness"></p>
+ <p>Codex uses thorough research. Your selected files and answers stay out of public releases. Selected information is processed by your Codex AI engine.</p>
+ <button data-codex="setup">Continue guided setup in Codex</button><p>For longer resume stories, consider answering by voice in Codex. It will ask one question at a time and follow up on missing facts.</p>
+ <form id="workspaceSetupForm" class="workspace-grid">
+  <label>Role focus<input name="focus" required placeholder="Describe the work you want"></label>
+  <label>Confirmed titles<input name="titles" required placeholder="Separate titles with commas"></label>
+  <label>Excluded titles<input name="excluded_titles" placeholder="Titles that would clutter your queue"></label>
+  <label>Locations<input name="locations" required placeholder="Your countries, cities or remote preferences"></label>
+  <label><input type="checkbox" name="sources_confirmed"> I reviewed and confirmed my sources</label>
+  <label><input type="checkbox" name="ranking_confirmed"> I finished reviewing ranking criteria</label>
+  <button type="submit">Save setup</button>
+ </form>
+ <h4>Ranking criteria</h4><p>Review criteria one by one, keep the ones you want, then add your own. Required rules filter jobs; preferences adjust ranking.</p>
+ <div id="criterionPrompt"></div><button id="nextCriterion" type="button">Next criterion</button>
+ <form id="workspaceRuleForm" class="workspace-grid"><input type="hidden" name="id">
+  <label>Criterion name<input name="label" required></label><label>Listing field<input name="field" required></label>
+  <label>Use<select name="mode"><option value="required">Required</option><option value="preferred">Preferred</option><option value="ignore">Ignore</option></select></label>
+  <label>Check<select name="operator"><option value="contains">Contains any listed term</option><option value="excludes">Excludes listed terms</option><option value="minimum">Minimum number</option><option value="maximum">Maximum number</option><option value="qualitative">Codex evidence assessment</option></select></label>
+  <label>Value<input name="value" placeholder="Terms, a number, or a qualitative criterion"></label>
+  <label>Importance<input name="weight" type="range" min="1" max="10" value="5"></label><button type="submit">Confirm rule</button>
+ </form><div id="workspaceRules"></div>
+ <h4>Your sources</h4><button data-codex="improve">Research additional sources and improvements</button>
+ <form id="workspaceSourceForm" class="workspace-grid">
+  <label>Name<input name="name" required></label><label>Public source URL<input name="url" type="url" required></label>
+  <label>Access<select name="method"><option value="codex">Codex browses</option><option value="feed">Connected feed</option><option value="manual">Manual discovery link</option></select></label>
+  <label>Why it suits your focus<input name="why"></label><button type="submit">Confirm source</button>
+ </form><button id="useDirectorySources">Review included source links</button><div id="workspaceSources"></div>
+ <h4>Find jobs</h4><button data-codex="search" id="workspaceSearch">Find jobs now</button>
+ <p>Set up recurring searches later in Codex when you are ready.</p><div id="workspaceVerification"></div>
+ <h4>Your resume master and supporting stories</h4>
+ <form id="workspaceMasterForm" class="workspace-grid">
+  <label>Editable Word master path<input name="docx" required></label><label>Matching PDF path (recommended)<input name="pdf"></label>
+  <label><input name="consent" type="checkbox" required> Read and privately copy only these selected files</label>
+  <button type="submit">Register master</button>
+ </form><p>Your master controls formatting and maximum page count. Word + PDF generation requires a supported renderer; Microsoft Word on macOS is currently supported.</p>
+ <form id="workspaceFolderForm"><label>Supporting documents folder<input name="folder" required></label><button type="submit">List files for selection</button></form>
+ <div id="workspaceInventory"></div><button id="importWorkspaceFiles">Read selected files</button>
+ <form id="workspaceFactForm"><label>Confirmed supporting fact<textarea name="text" required></textarea></label><label>Employer or role context<input name="context"></label><button type="submit">Confirm fact</button></form>
+ <label>Role for resume<select id="workspaceResumeRole"></select></label><button data-codex="resume">Propose improved bullets in Codex</button>
+ <div id="workspaceProposals"></div><button id="generateWorkspaceResume">Generate Word + PDF</button><div id="workspaceExports"></div>
+ <h4 id="improvementsHeading">Improvements</h4><div id="workspaceImprovements"></div>
+ <div id="workspaceIntegrations" hidden><h4>Application form filling</h4>
+ <p><a href="https://github.com/neonwatty/job-apply-plugin" target="_blank" rel="noopener noreferrer">NeonWatty Job Apply</a> uses your reviewed resume and profile to fill application forms, reuse confirmed answers and resume unfinished applications. It stops at final review; you submit. Site coverage varies.</p>
+ <button data-codex="job_apply_check">Configure and check Job Apply</button><button data-integration-choice="existing">Use existing tools</button><button data-integration-choice="skip">Skip for now</button><p id="jobApplyConnection"></p>
+ <p>Apply Desk also pairs well with <a href="https://simplify.jobs/copilot" target="_blank" rel="noopener noreferrer">Simplify Copilot’s free autofill feature</a>. Review every filled answer before submitting.</p></div>
+ <section aria-labelledby="portalHeading">
+ <h4 id="portalHeading">Application portals</h4>
+ <p>Use the same visible browser for sign-in and applications. You handle passwords, account creation, MFA and CAPTCHA. Apply Desk never saves cookies or login details. A check opens the page without filling fields or uploading a resume.</p>
+ <form id="workspacePortalForm" class="workspace-grid">
+ <label>Employer or portal name<input name="label" required maxlength="200" placeholder="Example employer — Workday"></label>
+ <label>Public career or application link<input name="url" type="url" required placeholder="https://..."></label>
+ <label>Browser<select name="browser"><option value="host">Let Codex choose the supported browser</option><option value="chrome">My existing Chrome session</option><option value="iab">Codex in-app browser</option></select></label>
+ <button type="submit">Save portal choice</button></form>
+ <div id="workspacePortalFamilies"></div><div id="workspacePortals"></div>
+ <button type="button" id="workspaceDoctor">Check setup and show safe support report</button>
+ <pre id="workspaceDoctorReport" tabindex="0"></pre><p>Support report omits personal files, settings, URLs, credentials and answers. Portal checks are optional and do not block job search.</p>
+ </section>
+ <h4>Codex requests</h4><div id="workspaceRequests"></div><pre id="workspacePrompt" tabindex="0"></pre><p id="workspaceMessage" role="status"></p>
+ </div>
+</section>
+
         <section class="view is-visible" id="focusView" aria-labelledby="focusHeading">
           <div class="focus-grid">
             <section class="panel focus-panel">
@@ -116,7 +180,7 @@
                 </div>
               </div>
               <form id="actionForm" class="form-grid">
-                <label class="wide">Action<input name="title" required placeholder="e.g. Clarify Stone's next matching opportunity" /></label>
+                <label class="wide">Action<input name="title" required placeholder="e.g. Follow up on a conversation" /></label>
                 <label>Company or person<input name="company" placeholder="Optional" /></label>
                 <label>Type<select name="action_type"><option value="relationship">Relationship</option><option value="application">Application</option><option value="follow_up">Follow-up</option><option value="interview">Interview prep</option><option value="research">Research</option></select></label>
                 <label>Priority<select name="priority"><option value="high">High</option><option value="normal" selected>Normal</option><option value="low">Low</option></select></label>
@@ -179,7 +243,7 @@
                   </div>
                   <div class="layout-gate">
                     <span>Layout locked</span>
-                    <strong>Resume tailoring is not included in this public preview</strong>
+                    <strong>Register your own Word master in Setup & improvements</strong><button type="button" data-open-setup>Open resume setup</button>
                   </div>
                   <p id="resumeBudget" class="subtle"></p>
                   <div id="resumePlanEmpty" class="empty">Choosing the document and changes...</div>
@@ -376,7 +440,7 @@
                   <div class="company-evidence-grid">
                     <div><span id="companyLcaTotal">0</span><p>certified LCA cases</p></div>
                     <div><span id="companyLcaRelevant">0</span><p>relevant-title cases</p></div>
-                    <div><span id="companyLcaNyc">0</span><p>relevant NYC cases</p></div>
+                    <div><span id="companyLcaLocation">0</span><p>cases in your preferred locations</p></div>
                   </div>
                   <p id="companyVisaRule" class="detail-copy"></p>
                   <p id="companyLcaTitles" class="subtle evidence-titles"></p>
@@ -431,7 +495,7 @@
                 <label>Company<input name="company" required /></label>
                 <label>ATS<select name="ats" required><option value="ashby">Ashby</option><option value="greenhouse">Greenhouse</option><option value="lever">Lever</option></select></label>
                 <label>Slug<input name="slug" required placeholder="company-slug" /></label>
-                <label>Location hint<input name="location_hint" placeholder="New York, NY" /></label>
+                <label>Location hint<input name="location_hint" placeholder="Your preferred location" /></label>
                 <label class="wide">Domain tags<input name="domain_tags" placeholder="fintech,enterprise_ai,b2b_saas" /></label>
               </form>
             </section>
@@ -470,7 +534,7 @@
               <div><h3 id="libraryHeading">Your resume bullet library</h3><p>Choose drafts, review their bullets, then use the approved wording for each job.</p></div>
               <button id="refreshLibraryBtn" class="icon-button" title="Refresh draft inventory" aria-label="Refresh draft inventory">↻</button>
             </div>
-            <div class="layout-gate"><span>Format locked</span><strong>Resume tailoring is not included in this public preview</strong></div>
+            <div class="layout-gate"><span>Format locked</span><strong>Register your own Word master in Setup & improvements</strong><button type="button" data-open-setup>Open resume setup</button></div>
             <p id="libraryStats" class="subtle">No drafts imported.</p>
             <div class="packet-tabs" role="tablist" aria-label="Bullet library sections">
               <button data-library-tab="drafts" role="tab" aria-selected="true" class="is-active">Choose drafts</button>
@@ -670,6 +734,7 @@
         </section>
       </main>
     </div>
-    <script src="/assets/app.js" type="module"></script>
+    <script src="/assets/app.js"></script>
+      <script src="/assets/workspace.js"></script>
   </body>
 </html>

@@ -61,7 +61,7 @@ document.querySelector("#openRoleBtn").addEventListener("click", () => openSelec
 document.querySelector("#fetchAtsBtn").addEventListener("click", fetchAtsSources);
 document.querySelector("#discoverySourceSearch").addEventListener("input", renderDiscoverySources);
 document.querySelector("#copyDiscoveryRefreshBtn").addEventListener("click", async () => {
-  const request = "Refresh job discovery in Apply Desk using the manual discovery workflow: Indeed and Built In first, then YC, Wellfound, Lenny's Jobs, Mind the Product, a16z and R Legal Tech. Use the connected readers, retrieve full details, verify employer publication dates, deduplicate and update source progress. Do not submit applications.";
+  const request = "Use $apply-desk:apply-desk to find jobs now in my confirmed Apply Desk workspace. Use thorough research and my saved focus, sources and ranking rules. Verify missing evidence and record source results. Do not approve resume changes or submit applications.";
   try { await navigator.clipboard.writeText(request); document.querySelector("#copyDiscoveryRefreshBtn").textContent = "Copied — paste into Codex"; }
   catch { document.querySelector("#discoveryRefreshSummary").textContent = request; }
 });
@@ -136,6 +136,7 @@ async function loadState(rebuild = false) {
 }
 
 function renderState() {
+  if (typeof renderWorkspace === "function") renderWorkspace();
   const warnings=state.validation_warnings || [];
   const warningBox=document.querySelector('#workspaceWarnings');
   warningBox.hidden=!warnings.length;
@@ -148,7 +149,7 @@ function renderState() {
   document.querySelector("#openActionCount").textContent = state.stats.open_actions || 0;
   document.querySelector("#dueActionCount").textContent = state.stats.due_actions || 0;
   document.querySelector("#updatedAt").textContent =
-    `Updated ${new Date(state.updated_at).toLocaleString()} · 21-day posting cutoff`;
+    `Updated ${new Date(state.updated_at).toLocaleString()} · your confirmed ranking rules`;
   renderProfile();
   renderRoleProgress();
   renderRoles();
@@ -370,7 +371,7 @@ function renderCompanyDetail() {
   visaStatus.textContent = `${row.sponsorship_posture}. ${row.sponsorship_evidence}.`;
   document.querySelector("#companyLcaTotal").textContent = Number(row.lca_cases || 0).toLocaleString();
   document.querySelector("#companyLcaRelevant").textContent = Number(row.relevant_lca_cases || 0).toLocaleString();
-  document.querySelector("#companyLcaNyc").textContent = Number(row.relevant_nyc_lca_cases || 0).toLocaleString();
+  document.querySelector("#companyLcaLocation").textContent = Number(row.preferred_location_lca_cases || 0).toLocaleString();
   document.querySelector("#companyVisaRule").textContent = row.sponsorship_rule;
   document.querySelector("#companyLcaTitles").textContent = row.relevant_titles_sample
     ? `Recent relevant LCA titles: ${row.relevant_titles_sample}`
@@ -1091,7 +1092,7 @@ async function reviewSelectedBullets(status) {
 
 function provenanceLabel(proof, sources) {
   if (proof.source_type === "user_facts") return "Facts supplied by you";
-  if (proof.source_type === "dallas_master") return "Approved master";
+  if (proof.source_type === "registered_master") return "Approved master";
   return sources.get(proof.source_id)?.relative_path || "Source resume";
 }
 

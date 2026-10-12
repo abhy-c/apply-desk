@@ -1493,3 +1493,5 @@ label.wide {
 [hidden] {
   display: none !important;
 }
+
+.workspace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin:16px 0}#setupView label{display:block;margin:10px 0}#setupView input:not([type=checkbox]),#setupView select,#setupView textarea{width:100%;box-sizing:border-box}#setupView .panel{max-width:1100px}#setupView pre{white-space:pre-wrap;overflow-wrap:anywhere}#setupView a,#setupView button{margin:6px}#setupView article{border:1px solid var(--border,#ddd);padding:16px;margin:12px 0}#setupView del{background:#ffe4e4}#setupView mark{background:#dff5da}

@@ -55,7 +55,7 @@ def build_target_company_rows(
         evidence = evidence_by_company.get(company.casefold(), {})
         lca_cases = _integer(evidence.get("lca_cases", ""))
         relevant_cases = _integer(evidence.get("relevant_lca_cases", ""))
-        relevant_nyc = _integer(evidence.get("relevant_nyc_lca_cases", ""))
+        preferred_location = _integer(evidence.get("preferred_location_lca_cases", ""))
         total_connections, strategic_connections = connection_counts.get(key, (0, 0))
         row: dict[str, object] = dict(target)
         row.update(
@@ -68,7 +68,7 @@ def build_target_company_rows(
                 "lca_cases": lca_cases,
                 "lca_worker_positions": _integer(evidence.get("lca_worker_positions", "")),
                 "relevant_lca_cases": relevant_cases,
-                "relevant_nyc_lca_cases": relevant_nyc,
+                "preferred_location_lca_cases": preferred_location,
                 "relevant_titles_sample": evidence.get("relevant_titles_sample", ""),
                 "sponsorship_evidence": _evidence_label(lca_cases, relevant_cases),
                 "sponsorship_risk": _sponsorship_risk(target.get("sponsorship_posture", "")),

@@ -100,7 +100,7 @@ def import_official_job_urls(
 
     def fetch_one(url: str) -> tuple[str, dict[str, str] | None, str]:
         try:
-            return url, fetch_official_job(url, today=today, page_loader=loader), ""
+            return url, fetch_official_job(url, today=today, page_loader=loader, user_config=__import__("job_app_system.workspace",fromlist=["read"]).read(data_dir.parent)["setup"]), ""
         except Exception as exc:  # Each URL should report its own failure without aborting the batch.
             return url, None, str(exc)
 
@@ -164,13 +164,13 @@ def parse_import_urls(raw_urls: str) -> list[str]:
     return candidates
 
 
-def fetch_official_job(url: str, *, today: date, page_loader: PageLoader | None = None) -> dict[str, str]:
+def fetch_official_job(url: str, *, today: date, page_loader: PageLoader | None = None, user_config=None) -> dict[str, str]:
     _validate_official_url(url)
     final_url, html = (page_loader or _load_page)(url)
     _validate_official_url(final_url)
     final_url = public_url(final_url,required=True)
     posting = extract_job_posting(html)
-    return normalize_job_posting(posting, final_url, today=today)
+    return normalize_job_posting(posting, final_url, today=today, user_config=user_config)
 
 
 def extract_job_posting(html: str) -> dict[str, object]:
@@ -189,20 +189,20 @@ def extract_job_posting(html: str) -> dict[str, object]:
     raise ValueError("The official page does not expose structured JobPosting metadata.")
 
 
-def normalize_job_posting(posting: dict[str, object], final_url: str, *, today: date) -> dict[str, str]:
+def normalize_job_posting(posting: dict[str, object], final_url: str, *, today: date, user_config=None) -> dict[str, str]:
     title = clean_text(str(posting.get("title", "")))
     organization = posting.get("hiringOrganization")
     company = clean_text(str(organization.get("name", ""))) if isinstance(organization, dict) else ""
     posted_date = _iso_date(str(posting.get("datePosted", "")))
     if not title or not company:
         raise ValueError("The official posting is missing a job title or employer name.")
-    if not posted_date:
+    if not posted_date and not user_config:
         raise ValueError("Rejected: no original publication date on the official posting.")
 
-    age_days = (today - posted_date).days
+    age_days = (today - posted_date).days if posted_date else 0
     if age_days < 0:
         raise ValueError("Rejected: the posting date is in the future.")
-    if age_days > 14:
+    if age_days > 14 and not user_config:
         raise ValueError(f"Rejected: posted {age_days} days ago; Apply Desk allows at most 14 days.")
 
     valid_through = _iso_date(str(posting.get("validThrough", "")))
@@ -210,11 +210,11 @@ def normalize_job_posting(posting: dict[str, object], final_url: str, *, today: 
         raise ValueError("Rejected: the official posting has expired.")
 
     location = _job_location(posting)
-    if not is_us_location(location):
+    if not is_us_location(location) and not user_config:
         raise ValueError(f"Rejected: location is not clearly US-only ({location or 'missing location'}).")
 
     raw_description = str(posting.get("description", ""))
-    if NO_SPONSORSHIP.search(raw_description):
+    if NO_SPONSORSHIP.search(raw_description) and not user_config:
         raise ValueError("Rejected: the official posting says visa sponsorship is unavailable.")
     description = clean_text(raw_description)
     workplace_text = f"{posting.get('jobLocationType', '')} {location} {description[:300]}"
@@ -226,7 +226,7 @@ def normalize_job_posting(posting: dict[str, object], final_url: str, *, today: 
         "role_title": title,
         "role_url": final_url,
         "source": "official_url_import",
-        "posted_date": posted_date.isoformat(),
+        "posted_date": posted_date.isoformat() if posted_date else "",
         "location": location,
         "workplace": workplace,
         "domain_tags": ",".join(_infer_domain_tags(f"{company} {title} {description}")),
