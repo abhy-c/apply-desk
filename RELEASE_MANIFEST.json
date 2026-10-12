@@ -1,0 +1,225 @@
+{
+  "version": "0.2.0",
+  "files": [
+    {
+      "path": ".github/workflows/test.yml",
+      "sha256": "75b7af0170d50d7388e8665a58c2a5ea41698313f48f5b46b6dd495b575c9d85"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "1d036b193afd8f8c3e03df036c0d2ab13294ac2ba67dda61a687092b6a84f415"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "421a2ac066667bd072c30f1a68e02865a8f2dce1deb36bceffd5d1416ab4925b"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "aa3d69b8fb69014edcb616b10abc0577ba01c10bb2a725481cd0b3c67c4a6eb8"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ac4ee198ca21de1dff970d30229770029fe42a9caf9db610c2f0075e203dfa64"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "98badf94e9d3b73bbefc2625b1eeca3dfa78ead521da27cf7cf00ec9425aa5da"
+    },
+    {
+      "path": "requirements-dev-lock.txt",
+      "sha256": "dcae013191dab86056a0f5fbc812bcaf3b8f11b96c3435c536a8b255b6ad6b1a"
+    },
+    {
+      "path": "scripts/package_release.py",
+      "sha256": "e7eef0c37777de3d2e643f0353914badc8b9ddad05903c4d895a53cc49786eb8"
+    },
+    {
+      "path": "scripts/setup.py",
+      "sha256": "d3de571aab55d4c89bfa466ce856678c746cf64401597d51069ccf7f14f15e9b"
+    },
+    {
+      "path": "src/job_app_system/__init__.py",
+      "sha256": "615c3f212c0d7b09b8936393b48172cd1926aee2a799421768eeb5e0da5721d9"
+    },
+    {
+      "path": "src/job_app_system/adapters.py",
+      "sha256": "ded3f0771c21597daa08e06bebf19a7d24c56c25ebe170c5c95411c4ddb8fa31"
+    },
+    {
+      "path": "src/job_app_system/application.py",
+      "sha256": "0376a4d39c177f6da1bfac42e8b37394fc06afbcb1b3991f1b51ff704c20af7e"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/ats_sources.csv",
+      "sha256": "81b4c0595067cd7a1ba33eb5f3dc389b6ff09b0557590c3f4a5bb9bd533f95db"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/companies.csv",
+      "sha256": "0e92a3a41a76837ba91a896c542474476c10a47113f89e8c176267c8106e1e82"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/contacts_seed.csv",
+      "sha256": "17cc4c8c87110a360289db571ed03404f01614afa14ea53c86d0c8fad4e04708"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/discovery_sources.json",
+      "sha256": "c2c6d4d49739284944daa20102682f7df515cc07629af57e974e73eefdac5ab8"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/jobs_seed.csv",
+      "sha256": "05afe0dcf6188a96613e2e3d95919ce8114e4fe3a3a2f2b6a07d56e56d29504f"
+    },
+    {
+      "path": "src/job_app_system/assets/examples/target_companies.csv",
+      "sha256": "0fc534ea677f0a4b778e7f739ce18f3c62838f81440f73bd7193596c89663879"
+    },
+    {
+      "path": "src/job_app_system/assets/web/app.css",
+      "sha256": "5ef62d4e59ea6f34e882d442954bfd6bce9502f2c615e526ec146d75c60fb4a7"
+    },
+    {
+      "path": "src/job_app_system/assets/web/app.js",
+      "sha256": "32ff1115800742ca705eded985a3e417dcb36ecdaadc5a840891c81b27ac7525"
+    },
+    {
+      "path": "src/job_app_system/assets/web/index.html",
+      "sha256": "5b2d83daf78a996eee2b65a37416ee966ff2141976d91b7a074718c0beed5cf2"
+    },
+    {
+      "path": "src/job_app_system/bullet_library.py",
+      "sha256": "62bfc783b5d1fee3cf9d94187b14aa369da5224a6eedc0733d39ddb6c6734550"
+    },
+    {
+      "path": "src/job_app_system/cli.py",
+      "sha256": "a429501a5377af27fdac3f79bc2d9b8c104010ffabe7442f6e2bb41af94978bb"
+    },
+    {
+      "path": "src/job_app_system/companies.py",
+      "sha256": "e2f4a1ed45a3ff36063c6c16f24f21fc539c2865d6d059e4bd74d5c30cacff6c"
+    },
+    {
+      "path": "src/job_app_system/connections.py",
+      "sha256": "9b7ef1e19667b4e0195abeca37b65957b9c041a9120b5c923acdb964a0fddb77"
+    },
+    {
+      "path": "src/job_app_system/cover_letters.py",
+      "sha256": "f89150efe98d55491e6ca9c85ac3cc8f49704ad54dad090a27946474ef1823ee"
+    },
+    {
+      "path": "src/job_app_system/discovery_import.py",
+      "sha256": "2c22cfac83494ccdb5af4bb07bfec19989240a63131334587d23cf3f46dc85eb"
+    },
+    {
+      "path": "src/job_app_system/docx_import.py",
+      "sha256": "644d509518a51e74032eaf1903bdddfb1f94d1d863343c002f40837dac231fce"
+    },
+    {
+      "path": "src/job_app_system/drafting.py",
+      "sha256": "0dd7386ecb41e56e568abfeaaf74a01853d7f1012568564257601135f448d157"
+    },
+    {
+      "path": "src/job_app_system/initialization.py",
+      "sha256": "861f97b96c2edb11afc6cee7a0cf9b0db71db98bbdcd02cc2da338c953af6d05"
+    },
+    {
+      "path": "src/job_app_system/io.py",
+      "sha256": "437a5faafd9cb8a57ba3f8a85b3845710eb4850e2c60e79d1bf1695f5590422a"
+    },
+    {
+      "path": "src/job_app_system/job_apply_link.py",
+      "sha256": "ee489b063708d0ea6fc3f9d8da763338c3a08bbd9ffd102ffd4fb6506d2f1b50"
+    },
+    {
+      "path": "src/job_app_system/manual_discovery.py",
+      "sha256": "d368b5e4420c4d717c0c00a90e4a02419e2afef954a1224f50a6733f46bb569e"
+    },
+    {
+      "path": "src/job_app_system/models.py",
+      "sha256": "f9830bbb7df26b740b365ac5e24254d2a27df7f0f443c94c1031533991aa3cd4"
+    },
+    {
+      "path": "src/job_app_system/network.py",
+      "sha256": "a30c0a40901fbfb8dc47a4212df282d14e3d95510206e355c367e43ace843fab"
+    },
+    {
+      "path": "src/job_app_system/pipeline.py",
+      "sha256": "ef2bfc62fb96f00a1b97640a1bf7312a36b6dd91951148afa77edb90d98a262c"
+    },
+    {
+      "path": "src/job_app_system/recruiters.py",
+      "sha256": "1e469d2a519975e21a9e4ebffde96e0fe7995152b99ca25adc07c369abd653e4"
+    },
+    {
+      "path": "src/job_app_system/resume_customization.py",
+      "sha256": "635a16b7a095ae1c6f3123e969ac09c34a70204c63a21d38f6648be9fafa44ae"
+    },
+    {
+      "path": "src/job_app_system/scoring.py",
+      "sha256": "508a28a39d8cd64f2fac329aa3830d34817eae91f2ad3cf5ae2d785fb4ae7459"
+    },
+    {
+      "path": "src/job_app_system/sheets.py",
+      "sha256": "8490fe0ff73bbd80d0dd261c7a86a80904a93fdb5d9c9f3a7ee72679aa01b0c6"
+    },
+    {
+      "path": "src/job_app_system/storage.py",
+      "sha256": "e31a9d15625376ca16832c45b6609b361fa7530e78ac5de2c4565488ea09b328"
+    },
+    {
+      "path": "src/job_app_system/tool_imports.py",
+      "sha256": "a046e997c007ec7cc834da2c95ebd589aedf0000d57ca22973154ddad4d90aeb"
+    },
+    {
+      "path": "src/job_app_system/validation.py",
+      "sha256": "2fd02f8ff2c71d505c5177d1f427dd0cbc772c328b62acdb86dabbd84d03c603"
+    },
+    {
+      "path": "src/job_app_system/web.py",
+      "sha256": "ab969f45aca23c2a99ab903be4cc5866114c461be2bc234bc96aa40fba82be5a"
+    },
+    {
+      "path": "src/job_app_system/workflow.py",
+      "sha256": "3e78ac582f528e9e30a75f7dc10020f28f55f722645d0f23a27cbf78e174ce30"
+    },
+    {
+      "path": "tests/test_adapters.py",
+      "sha256": "9fdecd53f472ea1aee5172af917a9af0c71c6b4cfa097ed9ff04b1e9b238b7c6"
+    },
+    {
+      "path": "tests/test_application.py",
+      "sha256": "75df40f216affef252c5f7d9c913a3deaad494b6ba18748c65a63d3e9745333f"
+    },
+    {
+      "path": "tests/test_companies.py",
+      "sha256": "5aa467be056967d68221afcc13fe24e4249d188c3bae675595bee152e77a8b7b"
+    },
+    {
+      "path": "tests/test_connections.py",
+      "sha256": "1ff20511a121d212bf4cca9822cb49cec514c72e2a00918011cdadd1188112f5"
+    },
+    {
+      "path": "tests/test_discovery_import.py",
+      "sha256": "18f50c791dda8a47591934fdbf646a69e984b68c542bd5ea7b7cd23d16885e6c"
+    },
+    {
+      "path": "tests/test_manual_discovery.py",
+      "sha256": "88d3fd155174bb6cb821b4a5766ef1b320bae80fe8d9c9b2e09d5ee7f9b355fc"
+    },
+    {
+      "path": "tests/test_public_preview.py",
+      "sha256": "e63812ee69e0c79e8a2f4c8a6eabd7ee0702d9b36e67d04e7a024cab89a30660"
+    },
+    {
+      "path": "tests/test_release_security.py",
+      "sha256": "a4a99ce8be99c7542ba99418eaf609db0cdda17bfab5ee5b9c6964f94ec37ce9"
+    },
+    {
+      "path": "tests/test_scoring.py",
+      "sha256": "b1ff4603192533b86e1d72ab0d7b3d61fa3bdebf6af25c59bd7e892beb7e398c"
+    },
+    {
+      "path": "tests/test_web.py",
+      "sha256": "e451dd0f86672a77eedd00eac2660e0e949a1a3699858d00ba89bf1adb83ceb9"
+    }
+  ]
+}

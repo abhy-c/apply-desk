@@ -1,0 +1,658 @@
+[
+  {
+    "id": "hiringcafe",
+    "name": "HiringCafe",
+    "mode": "manual_discovery",
+    "homepage_url": "https://hiringcafe.com/",
+    "description": "Broad job discovery sourced from employer career pages, with useful date, location, workplace, and visa filters.",
+    "policy": "Manual discovery only. Do not scrape or copy HiringCafe listings. Open the employer's official posting, then paste that URL into Apply Desk for scoring and verification.",
+    "searches": [
+      {
+        "label": "Product Manager",
+        "url": "https://hiringcafe.com/jobs/product-manager"
+      },
+      {
+        "label": "AI Product Manager",
+        "url": "https://hiringcafe.com/jobs/ai-product-manager-united-states"
+      },
+      {
+        "label": "Legal technology",
+        "url": "https://hiringcafe.com/jobs/legal"
+      },
+      {
+        "label": "Recently posted",
+        "url": "https://hiringcafe.com/recently-posted-jobs"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "High",
+    "coverage_note": "Manual links only; no Apply Desk reader or background checks.",
+    "recommended_reader": "Manual discovery to official employer page",
+    "evidence_url": "https://hiringcafe.com/terms-and-conditions",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "indeed",
+    "name": "Indeed",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.indeed.com/",
+    "description": "Search and detail provider tested; not connected to Apply Desk. Board listing dates can differ from posting dates.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Product · past 24 hours",
+        "url": "https://www.indeed.com/jobs?q=product+manager&l=United+States&sort=date&fromage=1"
+      },
+      {
+        "label": "Open source",
+        "url": "https://www.indeed.com/"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "High",
+    "coverage_note": "Search and detail provider tested; not connected to Apply Desk. Board listing dates can differ from posting dates.",
+    "recommended_reader": "Firecrawl Indeed provider: search, then job details",
+    "evidence_url": "https://www.indeed.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "linkedin_jobs",
+    "name": "LinkedIn Jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.linkedin.com/jobs/",
+    "description": "No job search collector. LinkedIn connection exports are networking data, not job discovery. Existing manual-only policy applies.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.linkedin.com/jobs/"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "High",
+    "coverage_note": "No job search collector. LinkedIn connection exports are networking data, not job discovery. Existing manual-only policy applies.",
+    "recommended_reader": "Saved job alerts and user-directed discovery",
+    "evidence_url": "https://www.linkedin.com/jobs/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "builtin",
+    "name": "Built In",
+    "mode": "manual_discovery",
+    "homepage_url": "https://builtin.com/jobs/product",
+    "description": "Search and detail provider tested; not connected to Apply Desk. Search cards alone do not supply full descriptions.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://builtin.com/jobs/product"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "Search and detail provider tested; not connected to Apply Desk. Search cards alone do not supply full descriptions.",
+    "recommended_reader": "Firecrawl Built In provider: search, then job details",
+    "evidence_url": "https://builtin.com/jobs/product",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "wellfound",
+    "name": "Wellfound",
+    "mode": "manual_discovery",
+    "homepage_url": "https://wellfound.com/jobs",
+    "description": "Public job cards readable in audit; pagination, US filters and detail extraction are not integrated.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://wellfound.com/jobs"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "Public job cards readable in audit; pagination, US filters and detail extraction are not integrated.",
+    "recommended_reader": "Public page discovery plus detail retrieval; account review where needed",
+    "evidence_url": "https://wellfound.com/jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "welcome_to_the_jungle",
+    "name": "Welcome to the Jungle (formerly Otta)",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.welcometothejungle.com/en/jobs",
+    "description": "No collector; personalized results may require account access.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.welcometothejungle.com/en/jobs"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "No collector; personalized results may require account access.",
+    "recommended_reader": "Account matching or saved alerts, then official postings",
+    "evidence_url": "https://www.welcometothejungle.com/en/jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "yc",
+    "name": "Y Combinator / Work at a Startup",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.ycombinator.com/jobs/role/product-manager",
+    "description": "No collector. Treat YC and Work at a Startup as the same source family to avoid double counting.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.ycombinator.com/jobs/role/product-manager"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "No collector. Treat YC and Work at a Startup as the same source family to avoid double counting.",
+    "recommended_reader": "Public role pages, then job details and employer verification",
+    "evidence_url": "https://www.ycombinator.com/jobs/role/product-manager",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "simplify",
+    "name": "Simplify Jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://simplify.jobs/",
+    "description": "Simplify form filling does not feed discovered jobs into Apply Desk.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://simplify.jobs/"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "Simplify form filling does not feed discovered jobs into Apply Desk.",
+    "recommended_reader": "User matching or saved jobs to official postings",
+    "evidence_url": "https://simplify.jobs/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "jobright",
+    "name": "Jobright",
+    "mode": "manual_discovery",
+    "homepage_url": "https://jobright.ai/",
+    "description": "No ingestion of Jobright recommendations. Resume output still requires the approved Dallas format and language gates.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://jobright.ai/"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "High",
+    "coverage_note": "No ingestion of Jobright recommendations. Resume output still requires the approved Dallas format and language gates.",
+    "recommended_reader": "User matching or saved jobs to official postings",
+    "evidence_url": "https://jobright.ai/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "lennys_jobs",
+    "name": "Lenny's Jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.lennysjobs.com/",
+    "description": "No collector. Current official board is lennysjobs.com.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.lennysjobs.com/"
+      }
+    ],
+    "category": "Product",
+    "priority": "High",
+    "coverage_note": "No collector. Current official board is lennysjobs.com.",
+    "recommended_reader": "Public board discovery plus detail retrieval",
+    "evidence_url": "https://www.lennysjobs.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "mind_the_product",
+    "name": "Mind the Product",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.mindtheproduct.com/jobs/",
+    "description": "No collector; US location and true posting dates still need verification.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.mindtheproduct.com/jobs/"
+      }
+    ],
+    "category": "Product",
+    "priority": "High",
+    "coverage_note": "No collector; US location and true posting dates still need verification.",
+    "recommended_reader": "Public board discovery plus detail retrieval",
+    "evidence_url": "https://www.mindtheproduct.com/jobs/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "rlegaltech",
+    "name": "R Legal Tech",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.rlegaltech.com/jobs",
+    "description": "Separate legal-tech import script exists; Fetch sources does not run it. Stored legal queue is stale.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.rlegaltech.com/jobs"
+      }
+    ],
+    "category": "Legal and legal tech",
+    "priority": "High",
+    "coverage_note": "Separate legal-tech import script exists; Fetch sources does not run it. Stored legal queue is stale.",
+    "recommended_reader": "Existing feed.json refresh script and official ATS verification",
+    "evidence_url": "https://www.rlegaltech.com/jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "legalio",
+    "name": "Legal.io",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.legal.io/jobs",
+    "description": "No collector. Filter for legal operations, implementation and legal-tech roles rather than assuming all legal jobs fit.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.legal.io/jobs"
+      }
+    ],
+    "category": "Legal and legal tech",
+    "priority": "Medium",
+    "coverage_note": "No collector. Filter for legal operations, implementation and legal-tech roles rather than assuming all legal jobs fit.",
+    "recommended_reader": "Public legal job pages plus official posting details",
+    "evidence_url": "https://www.legal.io/jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "dice",
+    "name": "Dice",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.dice.com/jobs/q-product+manager-jobs",
+    "description": "No collector. Pilot employer and staffing listings separately.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.dice.com/jobs/q-product+manager-jobs"
+      }
+    ],
+    "category": "Tech and startups",
+    "priority": "Medium",
+    "coverage_note": "No collector. Pilot employer and staffing listings separately.",
+    "recommended_reader": "Saved alerts or public detail pages after an access pilot",
+    "evidence_url": "https://www.dice.com/jobs/q-product+manager-jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "ziprecruiter",
+    "name": "ZipRecruiter",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.ziprecruiter.com/",
+    "description": "Search and detail provider tested; not connected to Apply Desk. Some roles apply inside ZipRecruiter without an outbound URL.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.ziprecruiter.com/"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "Medium",
+    "coverage_note": "Search and detail provider tested; not connected to Apply Desk. Some roles apply inside ZipRecruiter without an outbound URL.",
+    "recommended_reader": "Firecrawl ZipRecruiter provider: search, then job details",
+    "evidence_url": "https://www.ziprecruiter.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "glassdoor",
+    "name": "Glassdoor",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.glassdoor.com/index.htm",
+    "description": "No collector. Company reviews and estimated salaries must remain separate from employer-stated job facts.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.glassdoor.com/index.htm"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "Medium",
+    "coverage_note": "No collector. Company reviews and estimated salaries must remain separate from employer-stated job facts.",
+    "recommended_reader": "Saved alerts or account search, then official postings",
+    "evidence_url": "https://www.glassdoor.com/index.htm",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "monster",
+    "name": "Monster",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.monster.com/",
+    "description": "No collector. Lower initial priority; verify duplicates and original employer postings.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.monster.com/"
+      }
+    ],
+    "category": "Broad search",
+    "priority": "Low",
+    "coverage_note": "No collector. Lower initial priority; verify duplicates and original employer postings.",
+    "recommended_reader": "Saved alerts or public pages after an access pilot",
+    "evidence_url": "https://www.monster.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "efinancialcareers",
+    "name": "eFinancialCareers",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.efinancialcareers.com/jobs/product-manager",
+    "description": "No collector; target fintech, payments, regulatory systems and implementation roles.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.efinancialcareers.com/jobs/product-manager"
+      }
+    ],
+    "category": "Finance",
+    "priority": "Medium",
+    "coverage_note": "No collector; target fintech, payments, regulatory systems and implementation roles.",
+    "recommended_reader": "Public search and detail pages after an access pilot",
+    "evidence_url": "https://www.efinancialcareers.com/jobs/product-manager",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "weworkremotely",
+    "name": "We Work Remotely",
+    "mode": "manual_discovery",
+    "homepage_url": "https://weworkremotely.com/",
+    "description": "No collector. Worldwide remote does not mean eligible to work from the United States.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://weworkremotely.com/"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Medium",
+    "coverage_note": "No collector. Worldwide remote does not mean eligible to work from the United States.",
+    "recommended_reader": "Public board or documented feed after validation",
+    "evidence_url": "https://weworkremotely.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "remotive",
+    "name": "Remotive",
+    "mode": "manual_discovery",
+    "homepage_url": "https://remotive.com/",
+    "description": "No collector. Verify US eligibility, feed coverage and latency before treating it as a fresh source.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://remotive.com/"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Medium",
+    "coverage_note": "No collector. Verify US eligibility, feed coverage and latency before treating it as a fresh source.",
+    "recommended_reader": "Documented feed or public pages after validation",
+    "evidence_url": "https://remotive.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "remoteok",
+    "name": "Remote OK",
+    "mode": "manual_discovery",
+    "homepage_url": "https://remoteok.com/",
+    "description": "No collector; verify geography and listing freshness.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://remoteok.com/"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Medium",
+    "coverage_note": "No collector; verify geography and listing freshness.",
+    "recommended_reader": "Documented feed or public pages after validation",
+    "evidence_url": "https://remoteok.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "flexjobs",
+    "name": "FlexJobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.flexjobs.com/",
+    "description": "No collector. Paid access and account-specific results are not connected.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.flexjobs.com/"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Low",
+    "coverage_note": "No collector. Paid access and account-specific results are not connected.",
+    "recommended_reader": "User subscription or saved alerts",
+    "evidence_url": "https://www.flexjobs.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "workingnomads",
+    "name": "Working Nomads",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.workingnomads.com/jobs",
+    "description": "No collector. US geography and employer posting dates need verification.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.workingnomads.com/jobs"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Low",
+    "coverage_note": "No collector. US geography and employer posting dates need verification.",
+    "recommended_reader": "Public board discovery plus detail retrieval",
+    "evidence_url": "https://www.workingnomads.com/jobs",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "jobgether",
+    "name": "Jobgether",
+    "mode": "manual_discovery",
+    "homepage_url": "https://jobgether.com/",
+    "description": "No collector. Account recommendations are not connected.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://jobgether.com/"
+      }
+    ],
+    "category": "Remote",
+    "priority": "Low",
+    "coverage_note": "No collector. Account recommendations are not connected.",
+    "recommended_reader": "User matching or public pages after an access pilot",
+    "evidence_url": "https://jobgether.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "handshake",
+    "name": "Handshake",
+    "mode": "manual_discovery",
+    "homepage_url": "https://joinhandshake.com/",
+    "description": "No collector. Confirm school access and experienced-role relevance.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://joinhandshake.com/"
+      }
+    ],
+    "category": "MBA and university",
+    "priority": "Medium",
+    "coverage_note": "No collector. Confirm school access and experienced-role relevance.",
+    "recommended_reader": "User school account and saved alerts",
+    "evidence_url": "https://joinhandshake.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "mbaexchange",
+    "name": "MBA-Exchange",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.mba-exchange.com/",
+    "description": "No collector. School entitlement and personalized results are not connected.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.mba-exchange.com/"
+      }
+    ],
+    "category": "MBA and university",
+    "priority": "Medium",
+    "coverage_note": "No collector. School entitlement and personalized results are not connected.",
+    "recommended_reader": "User school or subscriber access and saved alerts",
+    "evidence_url": "https://www.mba-exchange.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "a16z",
+    "name": "a16z portfolio jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://jobs.a16z.com/",
+    "description": "No collector. Useful for discovering employers beyond the 12-company allowlist.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://jobs.a16z.com/"
+      }
+    ],
+    "category": "VC portfolios",
+    "priority": "High",
+    "coverage_note": "No collector. Useful for discovering employers beyond the 12-company allowlist.",
+    "recommended_reader": "Public portfolio board, then official employer ATS",
+    "evidence_url": "https://jobs.a16z.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "sequoia",
+    "name": "Sequoia portfolio jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://jobs.sequoiacap.com/",
+    "description": "No collector; overlapping portfolio employers require deduplication.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://jobs.sequoiacap.com/"
+      }
+    ],
+    "category": "VC portfolios",
+    "priority": "Medium",
+    "coverage_note": "No collector; overlapping portfolio employers require deduplication.",
+    "recommended_reader": "Public portfolio board, then official employer ATS",
+    "evidence_url": "https://jobs.sequoiacap.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "accel",
+    "name": "Accel portfolio jobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://jobs.accel.com/",
+    "description": "No collector; overlapping portfolio employers require deduplication.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://jobs.accel.com/"
+      }
+    ],
+    "category": "VC portfolios",
+    "priority": "Medium",
+    "coverage_note": "No collector; overlapping portfolio employers require deduplication.",
+    "recommended_reader": "Public portfolio board, then official employer ATS",
+    "evidence_url": "https://jobs.accel.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "interstride",
+    "name": "Interstride",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.interstride.com/",
+    "description": "No collector. Employer sponsorship history does not confirm sponsorship for a particular opening.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.interstride.com/"
+      }
+    ],
+    "category": "Sponsorship research",
+    "priority": "High",
+    "coverage_note": "No collector. Employer sponsorship history does not confirm sponsorship for a particular opening.",
+    "recommended_reader": "User university account; job discovery plus sponsor research",
+    "evidence_url": "https://www.interstride.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "myvisajobs",
+    "name": "MyVisaJobs",
+    "mode": "manual_discovery",
+    "homepage_url": "https://www.myvisajobs.com/",
+    "description": "No collector; sponsor history is enrichment, not proof that an opening sponsors.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://www.myvisajobs.com/"
+      }
+    ],
+    "category": "Sponsorship research",
+    "priority": "Medium",
+    "coverage_note": "No collector; sponsor history is enrichment, not proof that an opening sponsors.",
+    "recommended_reader": "Employer research and official posting verification",
+    "evidence_url": "https://www.myvisajobs.com/",
+    "audit_checked_at": "2026-10-07"
+  },
+  {
+    "id": "h1bgrader",
+    "name": "H1BGrader",
+    "mode": "manual_discovery",
+    "homepage_url": "https://h1bgrader.com/",
+    "description": "No collector; primarily sponsor research rather than a complete fresh-job feed.",
+    "policy": "Not automatically checked by Apply Desk. Open this source or use its saved alerts, then import the official employer posting. The suggested reader is an integration candidate, not an enabled collector.",
+    "searches": [
+      {
+        "label": "Open source",
+        "url": "https://h1bgrader.com/"
+      }
+    ],
+    "category": "Sponsorship research",
+    "priority": "Medium",
+    "coverage_note": "No collector; primarily sponsor research rather than a complete fresh-job feed.",
+    "recommended_reader": "Employer research and official posting verification",
+    "evidence_url": "https://h1bgrader.com/",
+    "audit_checked_at": "2026-10-07"
+  }
+]

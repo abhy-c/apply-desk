@@ -1,0 +1,21 @@
+# All applicant state and generated files stay local.
+/data/
+/out/
+/tmp/
+.venv/
+.env
+.env.*
+.job-system.local.json
+.apply-desk*
+*.log
+*.pid
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+*.docx
+*.pdf
+*.zip

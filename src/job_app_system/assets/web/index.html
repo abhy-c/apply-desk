@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apply Desk</title>
+    <link rel="stylesheet" href="/assets/app.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Job App System</p>
+          <h1>Apply Desk</h1>
+        </div>
+        <nav aria-label="Workspace">
+          <button class="nav-item is-active" data-view="focus">Focus</button>
+          <button class="nav-item" data-view="roles">Roles</button>
+          <button class="nav-item" data-view="legaltech">Legal tech</button>
+          <button class="nav-item" data-view="companies">Companies</button>
+          <button class="nav-item" data-view="sources">Sources</button>
+          <button class="nav-item" data-view="library" hidden>Bullet library</button>
+          <button class="nav-item" data-view="profile">Profile</button>
+          <button class="nav-item" data-view="network">Network</button>
+          <button class="nav-item" data-view="outreach">Outreach</button>
+          <button class="nav-item" data-view="add">Add role</button>
+        </nav>
+        <div class="policy">
+          <span>Review gate</span>
+          <strong>Human approval before submit</strong>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Local copilot</p>
+            <h2 id="workspaceTitle">Today's job search</h2>
+          </div>
+          <div class="actions">
+            <button id="refreshBtn" class="icon-button" title="Rebuild scores" aria-label="Rebuild scores">↻</button>
+            <a id="sheetLink" class="ghost-link" href="#" aria-disabled="true">Sheets</a>
+          </div>
+        </header>
+
+        <section id="unlockPanel" class="panel">
+          <h3>Unlock your local workspace</h3>
+          <p>Use the workspace code from your terminal. The code changes when the server restarts.</p>
+          <form id="unlockForm" class="form-grid">
+            <label>Workspace code<input name="code" type="password" autocomplete="off" required /></label>
+            <button id="unlockBtn" type="submit">Unlock</button>
+          </form>
+          <p id="unlockStatus" class="subtle" role="status"></p>
+        </section>
+        <p id="workspaceWarnings" class="notice" hidden></p>
+        <section class="metrics" aria-label="Pipeline metrics">
+          <div>
+            <span id="rolesCount">0</span>
+            <p>roles</p>
+          </div>
+          <div>
+            <span id="highFitCount">0</span>
+            <p>high fit</p>
+          </div>
+          <div>
+            <span id="appliedCount">0</span>
+            <p>applied</p>
+          </div>
+          <div>
+            <span id="queueCount">0</span>
+            <p>queued</p>
+          </div>
+          <div>
+            <span id="sourceCount">0</span>
+            <p>enabled ATS collectors</p>
+          </div>
+          <div>
+            <span id="openActionCount">0</span>
+            <p>open actions</p>
+          </div>
+          <div>
+            <span id="dueActionCount">0</span>
+            <p>due now</p>
+          </div>
+        </section>
+
+        <section class="view is-visible" id="focusView" aria-labelledby="focusHeading">
+          <div class="focus-grid">
+            <section class="panel focus-panel">
+              <div class="panel-header">
+                <div>
+                  <h3 id="focusHeading">What moves the search today</h3>
+                  <p>Relationship work, applications, and sourcing in one queue</p>
+                </div>
+              </div>
+              <div id="focusFeed" class="notice" hidden></div>
+              <div class="focus-section">
+                <h4>My actions</h4>
+                <div id="focusActions" class="focus-list"></div>
+              </div>
+              <div class="focus-section">
+                <h4>Best current roles</h4>
+                <div id="focusRoles" class="focus-list"></div>
+              </div>
+              <div class="focus-section">
+                <h4>Outreach and follow-ups</h4>
+                <div id="focusOutreach" class="focus-list"></div>
+              </div>
+            </section>
+
+            <section class="panel action-panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Add a real next step</h3>
+                  <p>Use this for conversations, applications, and follow-ups that a role list misses.</p>
+                </div>
+              </div>
+              <form id="actionForm" class="form-grid">
+                <label class="wide">Action<input name="title" required placeholder="e.g. Clarify Stone's next matching opportunity" /></label>
+                <label>Company or person<input name="company" placeholder="Optional" /></label>
+                <label>Type<select name="action_type"><option value="relationship">Relationship</option><option value="application">Application</option><option value="follow_up">Follow-up</option><option value="interview">Interview prep</option><option value="research">Research</option></select></label>
+                <label>Priority<select name="priority"><option value="high">High</option><option value="normal" selected>Normal</option><option value="low">Low</option></select></label>
+                <label>Due date<input name="due_date" type="date" /></label>
+                <label class="wide">Next step<textarea name="next_step" placeholder="What specifically needs to happen next?"></textarea></label>
+                <button id="saveActionBtn" type="submit">Add to queue</button>
+              </form>
+              <div id="actionList" class="focus-list action-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="rolesView" aria-labelledby="rolesHeading">
+          <div class="split">
+            <section class="panel roles-panel">
+              <div class="panel-header">
+                <div>
+                  <h3 id="rolesHeading">Role queue</h3>
+                  <p id="updatedAt">Only roles posted in the last 21 days</p>
+                </div>
+                <select id="roleFilter" aria-label="Filter roles">
+                  <option value="all">Active queue</option>
+                  <option value="high">High fit</option>
+                  <option value="review">Review</option>
+                  <option value="applied">Applied</option>
+                </select>
+              </div>
+              <div class="role-progress" aria-label="Application progress">
+                <div class="role-progress-copy">
+                  <strong id="roleProgressHeadline">0 roles need a decision</strong>
+                  <span id="roleProgressDetail">0 ready · 0 applied</span>
+                </div>
+                <div id="roleProgressBar" class="progress-bar" aria-hidden="true"></div>
+              </div>
+              <div id="rolesList" class="list"></div>
+            </section>
+
+            <section class="panel packet-panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Role workspace</h3>
+                  <p id="packetSubhead">Select a role</p>
+                </div>
+                <div class="inline-actions">
+                  <button id="openRoleBtn" class="icon-button" title="Open role" aria-label="Open role">↗</button>
+                </div>
+              </div>
+              <div id="packetEmpty" class="empty">No packet selected.</div>
+              <div id="packetBody" class="packet" hidden>
+                <div class="packet-tabs" role="tablist" aria-label="Role workspace sections">
+                  <button class="is-active" data-packet-tab="resume" hidden role="tab">Resume</button>
+                  <button data-packet-tab="application" role="tab">Application notes</button>
+                  <button data-packet-tab="interview" role="tab">Interview brief</button>
+                </div>
+
+                <section id="resumePane" class="packet-pane">
+                  <div class="resume-controls">
+                    <label>Role emphasis<select id="resumeTemplate"></select></label>
+                    <button id="rerankResumeBtn" class="ghost-button" type="button">Update recommendation</button>
+                  </div>
+                  <div class="layout-gate">
+                    <span>Layout locked</span>
+                    <strong>Resume tailoring is not included in this public preview</strong>
+                  </div>
+                  <p id="resumeBudget" class="subtle"></p>
+                  <div id="resumePlanEmpty" class="empty">Choosing the document and changes...</div>
+                  <div id="resumeDocument" class="notice"></div>
+                  <div id="resumeGroups" class="resume-groups"></div>
+                  <div class="resume-actions">
+                    <button id="buildWordBtn" class="ghost-button" type="button">Build Word</button>
+                    <button id="exportResumeBtn" type="button">Build Word + PDF</button>
+                  </div>
+                  <div id="resumeResult" class="notice" hidden></div>
+                </section>
+
+                <section id="applicationPane" class="packet-pane" hidden>
+                  <p id="packetDraftMeta" class="subtle"></p>
+                  <div class="score-line">
+                    <span id="packetScore">0</span>
+                    <p>fit score</p>
+                  </div>
+                  <h4>Resume focus</h4>
+                  <ul id="resumeFocus"></ul>
+                  <h4>Cover letter</h4>
+                  <textarea id="coverLetter" spellcheck="true"></textarea>
+                  <button id="exportCoverLetterBtn" hidden type="button" class="ghost-button">Build formatted cover letter PDF</button>
+                  <div id="coverLetterResult" class="notice" hidden></div>
+                  <h4>Screening answers</h4>
+                  <div id="screeningAnswers"></div>
+                  <div class="inline-actions packet-actions">
+                    <button id="savePacketBtn" class="ghost-button">Save draft</button>
+                    <button id="exportPacketBtn" class="ghost-button">Export notes</button>
+                  </div>
+                  <div id="packetExportPath" class="notice" hidden></div>
+                  <div class="status-row">
+                    <select id="statusSelect" aria-label="Application status">
+                      <option value="saved">Saved</option>
+                      <option value="ready_to_apply">Ready to apply</option>
+                      <option value="applied">Applied</option>
+                      <option value="skip">Skip</option>
+                    </select>
+                    <input id="statusNotes" placeholder="Notes" />
+                    <button id="saveStatusBtn">Save status</button>
+                  </div>
+                </section>
+
+                <section id="interviewPane" class="packet-pane" hidden>
+                  <p id="interviewBriefMeta" class="subtle"></p>
+                  <div id="interviewBrief"></div>
+                </section>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="legaltechView" aria-labelledby="legaltechHeading">
+          <div class="legaltech-metrics" aria-label="Legal technology role metrics">
+            <div><span id="legaltechTotal">0</span><p>verified roles</p></div>
+            <div><span id="legaltechPriority">0</span><p>priority matches</p></div>
+            <div><span id="legaltechFresh">0</span><p>posted this week</p></div>
+            <div><span id="legaltechSponsor">0</span><p>sponsor evidence</p></div>
+          </div>
+          <div class="split legaltech-split">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 id="legaltechHeading">Legal-tech role queue</h3>
+                  <p>US roles with official ATS publication dates from the last 14 days</p>
+                </div>
+              </div>
+              <div id="legaltechPolicy" class="notice warn"></div>
+              <div class="legaltech-toolbar">
+                <input id="legaltechSearch" type="search" placeholder="Search role or company" aria-label="Search legal technology roles" />
+                <select id="legaltechLaneFilter" aria-label="Filter legal technology role lane">
+                  <option value="all">All role lanes</option>
+                  <option value="Legal engineering">Legal engineering</option>
+                  <option value="Product">Product</option>
+                  <option value="Implementation &amp; solutions">Implementation &amp; solutions</option>
+                  <option value="Legal operations &amp; innovation">Legal operations &amp; innovation</option>
+                  <option value="Customer transformation">Customer transformation</option>
+                  <option value="Program &amp; operations">Program &amp; operations</option>
+                  <option value="Engineering &amp; data">Engineering &amp; data</option>
+                  <option value="Legal &amp; policy">Legal &amp; policy</option>
+                  <option value="Technical operations">Technical operations</option>
+                  <option value="Adjacent legal tech">Adjacent legal tech</option>
+                </select>
+                <select id="legaltechTierFilter" aria-label="Filter legal technology fit tier">
+                  <option value="all">All fit tiers</option>
+                  <option value="Priority">Priority</option>
+                  <option value="Strong">Strong</option>
+                  <option value="Explore">Explore</option>
+                </select>
+                <select id="legaltechSponsorFilter" aria-label="Filter legal technology sponsorship evidence">
+                  <option value="all">All sponsorship evidence</option>
+                  <option value="evidence">Role or employer evidence</option>
+                  <option value="unverified">Unverified</option>
+                </select>
+              </div>
+              <p id="legaltechResultCount" class="subtle legaltech-result-count"></p>
+              <div id="legaltechList" class="list legaltech-list"></div>
+            </section>
+
+            <section class="panel legaltech-detail-panel">
+              <div id="legaltechDetailEmpty" class="empty">Select a role to inspect its freshness, fit lane, and sponsorship evidence.</div>
+              <div id="legaltechDetail" hidden>
+                <div class="panel-header">
+                  <div>
+                    <h3 id="legaltechRoleTitle"></h3>
+                    <p id="legaltechRoleCompany"></p>
+                  </div>
+                  <span id="legaltechRoleScore" class="score">0</span>
+                </div>
+                <div id="legaltechRoleBadges" class="badge-row"></div>
+
+                <div class="evidence-section">
+                  <h4>Freshness</h4>
+                  <p id="legaltechRoleFreshness" class="detail-copy"></p>
+                </div>
+
+                <div class="evidence-section">
+                  <h4>Sponsorship evidence</h4>
+                  <div id="legaltechRoleVisa" class="notice"></div>
+                  <div class="company-evidence-grid legaltech-evidence-grid">
+                    <div><span id="legaltechRoleLca">0</span><p>certified LCA cases</p></div>
+                    <div><span id="legaltechRoleRelevantLca">0</span><p>relevant-title cases</p></div>
+                  </div>
+                </div>
+
+                <div class="evidence-section">
+                  <h4>Role snapshot</h4>
+                  <p id="legaltechRoleDescription" class="detail-copy"></p>
+                </div>
+
+                <a id="legaltechRoleLink" class="ghost-link legaltech-role-link" target="_blank" rel="noreferrer">Open official posting ↗</a>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="companiesView" aria-labelledby="companiesHeading">
+          <div class="company-metrics" aria-label="Target company metrics">
+            <div><span id="companyTotal">0</span><p>target companies</p></div>
+            <div><span id="companyTier1">0</span><p>Tier 1</p></div>
+            <div><span id="companySponsorHistory">0</span><p>relevant LCA history</p></div>
+            <div><span id="companyMonitored">0</span><p>sources monitored</p></div>
+          </div>
+          <div class="split companies-split">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 id="companiesHeading">Target companies</h3>
+                  <p>Ranked by fit, access, location, and sponsorship practicality</p>
+                </div>
+              </div>
+              <div id="sponsorshipPolicy" class="notice warn"></div>
+              <div class="company-toolbar">
+                <input id="companySearch" type="search" placeholder="Search company or fit lane" aria-label="Search target companies" />
+                <select id="companyTierFilter" aria-label="Filter company tier">
+                  <option value="all">All tiers</option>
+                  <option value="Tier 1">Tier 1</option>
+                  <option value="Tier 2">Tier 2</option>
+                  <option value="Tier 3">Tier 3</option>
+                </select>
+                <select id="companyVisaFilter" aria-label="Filter sponsorship evidence">
+                  <option value="all">All sponsorship evidence</option>
+                  <option value="relevant">Relevant LCA history</option>
+                  <option value="selective">Selective or unverified</option>
+                  <option value="monitored">Source monitored</option>
+                </select>
+              </div>
+              <p id="companyResultCount" class="subtle company-result-count"></p>
+              <div id="companyList" class="list company-list"></div>
+            </section>
+
+            <section class="panel company-detail-panel">
+              <div id="companyDetailEmpty" class="empty">Select a company to inspect fit, access, source coverage, and sponsorship evidence.</div>
+              <div id="companyDetail" hidden>
+                <div class="panel-header">
+                  <div>
+                    <h3 id="companyName"></h3>
+                    <p id="companyHeadline"></p>
+                  </div>
+                  <span id="companyScore" class="score">0</span>
+                </div>
+                <div id="companyBadges" class="badge-row"></div>
+
+                <div class="evidence-section">
+                  <h4>Why target</h4>
+                  <p id="companyNotes" class="detail-copy"></p>
+                  <div id="companyFitLanes" class="badge-row detail-badges"></div>
+                  <p id="companyRoles" class="detail-copy"></p>
+                </div>
+
+                <div class="evidence-section">
+                  <h4>Sponsorship evidence</h4>
+                  <div id="companyVisaStatus" class="notice"></div>
+                  <div class="company-evidence-grid">
+                    <div><span id="companyLcaTotal">0</span><p>certified LCA cases</p></div>
+                    <div><span id="companyLcaRelevant">0</span><p>relevant-title cases</p></div>
+                    <div><span id="companyLcaNyc">0</span><p>relevant NYC cases</p></div>
+                  </div>
+                  <p id="companyVisaRule" class="detail-copy"></p>
+                  <p id="companyLcaTitles" class="subtle evidence-titles"></p>
+                </div>
+
+                <div class="evidence-section">
+                  <h4>Access and coverage</h4>
+                  <div class="company-evidence-grid">
+                    <div><span id="companyConnections">0</span><p>connections</p></div>
+                    <div><span id="companyStrategicConnections">0</span><p>strategic contacts</p></div>
+                    <div><span id="companyCurrentRoles">0</span><p>current roles</p></div>
+                  </div>
+                  <p id="companySourceStatus" class="detail-copy"></p>
+                </div>
+
+                <div class="company-links">
+                  <a id="companyCareersLink" class="ghost-link" target="_blank" rel="noreferrer">Open careers ↗</a>
+                  <a id="companyEvidenceLink" class="ghost-link" target="_blank" rel="noreferrer">Open DOL source ↗</a>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="sourcesView" aria-labelledby="sourcesHeading">
+          <div class="split sources-split">
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3 id="sourcesHeading">ATS sources</h3>
+                  <p id="sourceSyncStatus">Manage public Ashby, Greenhouse, and Lever boards</p>
+                </div>
+                <button id="fetchAtsBtn">Fetch enabled</button>
+              </div>
+              <div id="atsSourcesList" class="list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Source details</h3>
+                  <p>Add or update a confirmed public board slug</p>
+                </div>
+                <div class="inline-actions">
+                  <button id="cancelSourceEditBtn" class="ghost-button" type="button">Clear</button>
+                  <button id="saveSourceBtn" type="button">Save source</button>
+                </div>
+              </div>
+              <form id="atsSourceForm" class="form-grid">
+                <input name="original_key" type="hidden" />
+                <label class="checkbox-label wide"><input name="enabled" type="checkbox" checked /> Enabled for fetch</label>
+                <label>Company<input name="company" required /></label>
+                <label>ATS<select name="ats" required><option value="ashby">Ashby</option><option value="greenhouse">Greenhouse</option><option value="lever">Lever</option></select></label>
+                <label>Slug<input name="slug" required placeholder="company-slug" /></label>
+                <label>Location hint<input name="location_hint" placeholder="New York, NY" /></label>
+                <label class="wide">Domain tags<input name="domain_tags" placeholder="fintech,enterprise_ai,b2b_saas" /></label>
+              </form>
+            </section>
+          </div>
+
+          <section class="panel discovery-sources-panel" aria-labelledby="discoverySourcesHeading">
+            <div class="panel-header">
+              <div>
+                <h3 id="discoverySourcesHeading">Discovery coverage directory</h3>
+                <p id="discoveryCoverageSummary">These sources need a reader integration. Links do not count as automated coverage.</p>
+              </div>
+            </div>
+            <div class="manual-discovery-refresh">
+              <div><h4>Refresh with Codex</h4><p>Ask Codex to refresh these sources. Your connected readers collect details in the background; results and progress appear here. No separate Firecrawl API key is needed.</p></div>
+              <button id="copyDiscoveryRefreshBtn" type="button" class="ghost-button">Copy refresh request</button>
+              <p id="discoveryRefreshSummary" class="subtle"></p>
+              <div id="discoveryRunSources" class="list"></div>
+              <details><summary id="discoveryReviewSummary">Postings needing verification</summary><div id="discoveryNeedsReview" class="list"></div></details>
+            </div>
+            <form id="officialUrlImportForm" class="official-url-import">
+              <label>Official employer job URLs<textarea name="urls" required placeholder="Paste up to 25 HTTPS job URLs, one per line"></textarea></label>
+              <div class="official-import-actions">
+                <p>Only dated US postings from the last 14 days are accepted.</p>
+                <button id="importOfficialUrlsBtn" type="submit">Import and score</button>
+              </div>
+            </form>
+            <div id="officialImportResult" class="official-import-result" hidden></div>
+            <label>Find a source<input id="discoverySourceSearch" type="search" placeholder="Board, category, or priority"></label>
+            <div id="discoverySourcesList" class="discovery-source-list"></div>
+          </section>
+        </section>
+
+        <section class="view" id="libraryView" aria-labelledby="libraryHeading">
+          <section class="panel">
+            <div class="panel-header">
+              <div><h3 id="libraryHeading">Your resume bullet library</h3><p>Choose drafts, review their bullets, then use the approved wording for each job.</p></div>
+              <button id="refreshLibraryBtn" class="icon-button" title="Refresh draft inventory" aria-label="Refresh draft inventory">↻</button>
+            </div>
+            <div class="layout-gate"><span>Format locked</span><strong>Resume tailoring is not included in this public preview</strong></div>
+            <p id="libraryStats" class="subtle">No drafts imported.</p>
+            <div class="packet-tabs" role="tablist" aria-label="Bullet library sections">
+              <button data-library-tab="drafts" role="tab" aria-selected="true" class="is-active">Choose drafts</button>
+              <button data-library-tab="bullets" role="tab" aria-selected="false">Review bullets</button>
+              <button data-library-tab="proposals" role="tab" aria-selected="false">Proposed language <span id="proposalCount">0</span></button>
+            </div>
+            <div id="draftsLibraryPane">
+              <p class="subtle">Nothing is preselected. Only the files you check will be parsed. Word and PDF versions are separate choices.</p>
+              <div class="library-toolbar"><label>Find drafts<input id="draftSearch" type="search" placeholder="Filename or folder" /></label><button id="importDraftsBtn" type="button" disabled>Import selected drafts (0)</button></div>
+              <div id="draftInventory" class="draft-inventory"></div>
+            </div>
+            <div id="bulletsLibraryPane" hidden>
+              <p class="subtle">Approve only wording you trust. Original text stays intact; edits go to Proposed language for separate approval. Confirm the employer and role before approval.</p>
+              <div class="library-toolbar">
+                <label>Find bullets<input id="bulletSearch" type="search" placeholder="Text or source filename" /></label>
+                <label>Status<select id="bulletStatusFilter"><option value="pending">Needs review</option><option value="approved">Approved</option><option value="excluded">Excluded</option><option value="all">All</option></select></label>
+                <label>Employer / role<select id="bulletGroupFilter"><option value="all">All</option></select></label>
+              </div>
+              <div class="inline-actions library-review-actions"><button id="approveBulletsBtn" type="button" disabled>Approve selected</button><button id="excludeBulletsBtn" class="ghost-button" type="button" disabled>Exclude selected</button><span id="bulletSelectionCount" class="subtle">0 selected</span></div>
+              <div id="bulletLibraryList" class="bullet-library-list"></div>
+            </div>
+            <div id="proposalsLibraryPane" hidden>
+              <p class="subtle">Added words are highlighted in green; removed words are crossed out in red. Nothing here enters a resume until you approve the exact wording and its supporting facts.</p>
+              <details class="proposal-add-form">
+                <summary>Propose an additional bullet</summary>
+                <form id="addBulletProposalForm" class="form-grid">
+                  <label>Employer / role<select id="proposalAdditionGroup" name="group" required><option value="">Choose employer / role</option></select></label>
+                  <label class="wide">Proposed bullet<textarea name="proposed_text" required maxlength="2000"></textarea></label>
+                  <label class="wide">Supporting facts you supplied<textarea name="supporting_facts" required maxlength="10000" placeholder="The actual experience, ownership, tools, and metrics supporting this bullet"></textarea></label>
+                  <label class="wide">Why add it?<textarea name="reason" required maxlength="4000"></textarea></label>
+                  <button type="submit">Save proposal for review</button>
+                </form>
+              </details>
+              <label>Show<select id="proposalStatusFilter"><option value="pending">Needs approval</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="all">All proposals</option></select></label>
+              <div id="proposalLibraryList" class="bullet-library-list"></div>
+            </div>
+            <div id="libraryNotice" class="notice" role="status" hidden></div>
+          </section>
+        </section>
+
+        <section class="view" id="profileView" aria-labelledby="profileHeading">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 id="profileHeading">Candidate profile</h3>
+                <p>Used for matching and draft answers</p>
+              </div>
+              <button id="saveProfileBtn">Save profile</button>
+            </div>
+            <form id="profileForm" class="form-grid">
+              <label>Full name<input name="full_name" /></label>
+              <label>Target titles<input name="target_titles" /></label>
+              <label>Preferred locations (separate with semicolons)<input name="target_locations" /></label>
+              <label>Work authorization<input name="work_authorization" /></label>
+              <label>Salary range<input name="salary_range" /></label>
+              <label class="wide">Domains to prioritize (comma-separated)<textarea name="must_have"></textarea></label>
+              <label class="wide">Title keywords to exclude (comma-separated)<textarea name="avoid"></textarea></label>
+              <label class="wide">Standard answers<textarea name="standard_answers"></textarea></label>
+            </form>
+          </section>
+          <section class="panel linked-profile-panel" aria-labelledby="jobApplyProfileHeading">
+            <div class="panel-header">
+              <div>
+                <h3 id="jobApplyProfileHeading">Job Apply profile</h3>
+                <p>Read-only link to your application details and default resume</p>
+              </div>
+              <button id="refreshJobApplyProfileBtn" class="ghost-button" type="button">Read my local profile</button>
+            </div>
+            <p id="jobApplyProfileStatus" class="subtle" role="status">Access is off. Clicking the button reads your local name, email, phone, location, resume path, employment, education, and skills.</p>
+            <dl id="jobApplyProfileDetails" class="linked-profile-details" hidden></dl>
+            <p class="subtle linked-profile-note">The linked profile is shown for reference. Reading it does not choose a resume or submit an application.</p>
+          </section>
+        </section>
+
+        <section class="view" id="networkView" aria-labelledby="networkHeading">
+          <div class="network-metrics" aria-label="Connection ranking metrics">
+            <div><span id="networkTotal">0</span><p>identifiable connections</p></div>
+            <div><span id="networkTier1">0</span><p>recent hiring</p></div>
+            <div><span id="networkTier2">0</span><p>warm relevance</p></div>
+            <div><span id="networkHistory">0</span><p>message history</p></div>
+          </div>
+          <div class="split network-split">
+            <section class="panel">
+              <div class="panel-header network-header">
+                <div>
+                  <h3 id="networkHeading">Connection ranking</h3>
+                  <p id="linkedinSourceStatus">Waiting for LinkedIn export</p>
+                </div>
+                <button id="refreshLinkedinBtn" class="ghost-button" type="button">Refresh export</button>
+              </div>
+              <div class="network-toolbar">
+                <input id="networkSearch" type="search" placeholder="Search name, company, or title" aria-label="Search connections" />
+                <select id="networkFilter" aria-label="Filter connection tier">
+                  <option value="priority">Tier 1, Tier 2, and Watchlist</option>
+                  <option value="tier1">Tier 1: recent hiring</option>
+                  <option value="tier2">Tier 2: warm relevance</option>
+                  <option value="watchlist">Watchlist</option>
+                  <option value="history">Has message history</option>
+                  <option value="all">All connections</option>
+                </select>
+              </div>
+              <p id="networkResultCount" class="subtle network-result-count"></p>
+              <div id="networkList" class="list network-list"></div>
+            </section>
+
+            <section class="panel network-detail-panel">
+              <div id="networkDetailEmpty" class="empty">Select a connection to review its ranking evidence.</div>
+              <div id="networkDetail" hidden>
+                <div class="panel-header">
+                  <div>
+                    <h3 id="connectionName"></h3>
+                    <p id="connectionHeadline"></p>
+                  </div>
+                  <span id="connectionScore" class="score">0</span>
+                </div>
+                <div id="connectionBadges" class="badge-row"></div>
+
+                <div class="evidence-section">
+                  <h4>Why this rank</h4>
+                  <p id="connectionReasons" class="detail-copy"></p>
+                </div>
+                <div class="evidence-section">
+                  <h4>Hiring evidence</h4>
+                  <div id="hiringEvidenceStatus" class="notice warn"></div>
+                </div>
+                <div id="matchingRoleSection" class="evidence-section" hidden>
+                  <h4>Recent company opening</h4>
+                  <a id="matchingRoleLink" class="detail-link" target="_blank" rel="noreferrer"></a>
+                </div>
+
+                <div class="manual-policy">
+                  <strong>LinkedIn stays manual</strong>
+                  <span>This dashboard ranks and logs. It never visits profiles or sends messages.</span>
+                </div>
+                <a id="openConnectionBtn" class="ghost-link connection-link" target="_blank" rel="noreferrer">Open LinkedIn ↗</a>
+
+                <form id="connectionReviewForm" class="form-grid connection-review-form">
+                  <label>Status<select name="status">
+                    <option value="needs_review">Needs review</option>
+                    <option value="approved_to_contact">Approved to contact</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="follow_up">Follow-up</option>
+                    <option value="skip">Skip</option>
+                  </select></label>
+                  <label>Hiring evidence date<input name="hiring_evidence_date" type="date" /></label>
+                  <label class="wide">Person-specific evidence<select name="hiring_evidence_type">
+                    <option value="">None recorded</option>
+                    <option value="hiring_post">Hiring post</option>
+                    <option value="direct_conversation">Direct conversation</option>
+                    <option value="recruiter_owned_opening">Recruiter-owned opening</option>
+                    <option value="other_person_specific">Other person-specific evidence</option>
+                  </select></label>
+                  <label class="wide">Evidence URL<input name="hiring_evidence_url" type="url" placeholder="Optional post or role URL" /></label>
+                  <label class="wide">Review notes<textarea name="notes" placeholder="Context, relationship, or approach notes"></textarea></label>
+                  <label class="checkbox-label wide"><input name="do_not_contact" type="checkbox" /> Do not contact</label>
+                  <button id="saveConnectionReviewBtn" type="submit">Save review</button>
+                </form>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="outreachView" aria-labelledby="outreachHeading">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 id="outreachHeading">Outreach queue</h3>
+                <p>Contacts and follow-ups from the scoring pipeline</p>
+              </div>
+            </div>
+            <div id="outreachList" class="list"></div>
+          </section>
+        </section>
+
+        <section class="view" id="addView" aria-labelledby="addHeading">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 id="addHeading">Add role</h3>
+                <p>Manual intake for roles found outside ATS refresh</p>
+              </div>
+              <button id="addRoleBtn">Add and score</button>
+            </div>
+            <form id="addRoleForm" class="form-grid">
+              <label>Company<input name="company" required /></label>
+              <label>Role title<input name="role_title" required /></label>
+              <label>Discovery source<select name="source"><option value="manual">Manual</option><option value="hiringcafe_discovery">HiringCafe</option></select></label>
+              <label>Role URL<input name="role_url" type="url" /></label>
+              <label>Posted date<input name="posted_date" type="date" /></label>
+              <label>Location<input name="location" /></label>
+              <label>Workplace<select name="workplace"><option value=""></option><option>remote</option><option>hybrid</option><option>onsite</option></select></label>
+              <label>Domain tags<input name="domain_tags" placeholder="fintech,enterprise_ai" /></label>
+              <label>Seniority<input name="seniority" placeholder="PM" /></label>
+              <label class="wide">Description<textarea name="description"></textarea></label>
+            </form>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script src="/assets/app.js" type="module"></script>
+  </body>
+</html>
