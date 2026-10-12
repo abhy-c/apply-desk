@@ -94,7 +94,15 @@ def test_no_automatic_plugin_read_and_explicit_opt_in(local_api,monkeypatch):
 def test_state_get_is_read_only(local_api):
     request,root=local_api
     def snapshot():
-        return {str(p.relative_to(root)):(p.read_bytes(),p.stat().st_mtime_ns) for p in root.rglob('*') if p.is_file()}
+        result={}
+        for p in root.rglob('*'):
+            if not p.is_file(): continue
+            stat=p.stat()
+            # Windows forbids reading the held server lock. It stores no
+            # applicant data; still verify its presence, size and timestamp.
+            contents=None if p==root/'data/.server.lock' else p.read_bytes()
+            result[str(p.relative_to(root))]=(contents,stat.st_size,stat.st_mtime_ns)
+        return result
     before=snapshot()
     assert request('GET','/api/state?rebuild=1')[0]==200
     assert snapshot()==before

@@ -307,7 +307,7 @@
     },
     {
       "path": "tests/test_release_security.py",
-      "sha256": "a4a99ce8be99c7542ba99418eaf609db0cdda17bfab5ee5b9c6964f94ec37ce9"
+      "sha256": "e12cb0bcf6371071b3cfb19d165538cb09631c2eaf759ee69d98f8689ea247b5"
     },
     {
       "path": "tests/test_scoring.py",
